@@ -13,16 +13,24 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['frontend']);
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function frontend()
     {
-        return view('home');
+        $data['title'] = trans('index.title-front');
+        return view('welcome', $data);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function backend()
+    {
+        $data['title'] = trans('index.title-admin');
+        return view('home', $data);
     }
 }
