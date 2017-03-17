@@ -39,7 +39,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $data['title']    = trans('new.title-index');
+        $data['title']    = trans('news.title-index');
         $data['articles'] = $this->dbArticle->with(['author', 'categories'])->paginate(15);
 
         return view('news.index', $data);
@@ -67,6 +67,16 @@ class BlogController extends Controller
      */
     public function store(NewsValidation $input)
     {
+        $db['create']     = $this->dbArticle->create($input->except(['_token', 'categories']));
+        $db['relation']   = $this->dbArticle->find($db['create']->id)
+            ->categories()
+            ->attach($input->categories);
+
+        if ($db['create'] && $db['relation']) {
+          session()->flash('class', 'alert alert-success');
+          session()->flasg('message', trans('news.flash-create'));
+        }
+
         return back();
     }
 }
