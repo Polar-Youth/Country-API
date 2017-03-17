@@ -42,7 +42,7 @@ class CountryController extends Controller
         $data['title']     = trans('');
         $data['countries'] = $model->with($this->countryRelations)->paginate(15);
 
-        return view('', $data);
+        return view('countries.index', $data);
     }
 
     public function edit()
