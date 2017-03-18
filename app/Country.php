@@ -31,13 +31,23 @@ class Country extends Model
         return $this->belongsTo(Continents::class, 'continent_id');
     }
 
+    /**
+     * Get the regions (divisions) for this country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function divisions()
     {
-        return $this->belongsToMany()->withTimestamps();
+        return $this->belongsToMany(Division::class)->withTimestamps();
     }
 
+    /**
+     * Get the borders information for the country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function borders()
     {
-        return $this->belongsToMany()->withTimestamps();
+        return $this->belongsToMany(Country::class, 'country_border')->withTimestamps();
     }
 }
