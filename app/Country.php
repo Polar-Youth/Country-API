@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\CountryDelete;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,7 +13,17 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $events = [
+        'deleted' => CountryDelete::class
+    ];
+
+    /**
      * Mass assign fields for the database.
+     *
      * @var array
      */
     protected $fillable = [
