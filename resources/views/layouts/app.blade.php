@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -44,9 +42,10 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href=""><span class="" aria-hidden="true"></span> Countries</a></li>
-                        <li><a href=""><span class="" aria-hidden="true"></span> API Docs</a></li>
-                        <li><a href=""><span class="" aria-hidden="true"></span> New volunteer</a></li>
+                        <li><a href=""><span class="fa fa-flag" aria-hidden="true"></span> Countries</a></li>
+                        <li><a href=""><span class="fa fa-file-code-o" aria-hidden="true"></span> API Docs</a></li>
+                        <li><a href=""><span class="fa fa-plus" aria-hidden="true"></span> New volunteer</a></li>
+                        <li><a href=""><span class="fa fa-newspaper-o" aria-hidden="true"></span> News</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -100,7 +99,7 @@
         @yield('content')
     </div>
 
-    <!-- Scripts -->
+    {{-- Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

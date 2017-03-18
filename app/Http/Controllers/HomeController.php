@@ -17,6 +17,8 @@ class HomeController extends Controller
     }
 
     /**
+     * Get the front-end index. 
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function frontend()
@@ -26,6 +28,8 @@ class HomeController extends Controller
     }
 
     /**
+     * Get the backend index. 
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function backend()

@@ -20,10 +20,22 @@ class Article extends Model
     }
 
     /**
+     * Get the categories for the dnews article 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function categories()
     {
         return $this->belongsToMany(Categories::class)->withTimestamps();
+    }
+
+    /**
+     * Get the comments for a news post.
+     *
+     * @return \Illuminate\Database\ELoquent\Relations\BelongsToMany
+     */
+    public function comments() 
+    {
+        return $this->belongsToMany(Comment::class)->withTimestamps();
     }
 }

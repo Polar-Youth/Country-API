@@ -18,6 +18,7 @@ class BlogController extends Controller
      * @var Article
      */
     private $dbArticle;
+    
     /**
      * @var User
      */
