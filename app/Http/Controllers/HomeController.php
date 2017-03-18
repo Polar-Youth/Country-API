@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+/**
+ * Class HomeController
+ *
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
@@ -19,6 +24,8 @@ class HomeController extends Controller
     /**
      * Get the front-end index. 
      *
+     * @see:unit-test   TODO: write unit test.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function frontend()
@@ -29,6 +36,8 @@ class HomeController extends Controller
 
     /**
      * Get the backend index. 
+     *
+     * @see:unit-test   TODO: write unit test.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

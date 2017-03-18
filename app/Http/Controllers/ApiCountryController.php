@@ -64,6 +64,8 @@ class ApiCountryController extends Controller
     /**
      * Get all the countries that are in the data storage.
      *
+     * @see:unit-test   TODO: write unit test
+     *
      * @param  Input  $input  The input facade from laravel.
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
@@ -107,6 +109,9 @@ class ApiCountryController extends Controller
 
     /**
      * Update a country resource in the API.
+     *
+     * @see:unit-test   TODO: write unit-test
+     * @see:unit-test   TODO: write unit-test
      *
      * @param  Request  $request  The user input interface.
      * @param  Log      $log      The logging interface.

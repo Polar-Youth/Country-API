@@ -41,6 +41,8 @@ class BlogController extends Controller
     /**
      * Get the news index page.
      *
+     * @see:unit-test   TODO: write unit test.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -54,11 +56,15 @@ class BlogController extends Controller
     /**
      * Show a specific news message to the user.
      *
+     * @see:unit-test   TODO: write unit test.
+     *
      * @param  int $articleId the database id for the news article.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($articleId)
     {
+        // TODO: Check for redirect or abort 404 when no data is found.
+
         $data['article'] = $this->dbArticle->with(['author', 'categories'])->find($articleId);
         $data['title']   = $data['article']->title;
 
@@ -67,6 +73,9 @@ class BlogController extends Controller
 
     /**
      * Create a new article in the database.
+     *
+     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   TODO: write unit test.
      *
      * @param  NewsValidation $input The user input validation.
      * @return \Illuminate\Http\RedirectResponse
@@ -86,6 +95,9 @@ class BlogController extends Controller
 
     /**
      * Update a post in the database.
+     *
+     * @see:unit-test   TODO: Write unit test.
+     * @see:unit-test   TODO: Write unit test.
      *
      * @param  NewsValidation $input      The user input validation.
      * @param  int            $articleId  The news article id in the database.
@@ -108,6 +120,8 @@ class BlogController extends Controller
 
     /**
      * Delete a article in the database.
+     *
+     * @see:unit-test   TODO: write unit test.
      *
      * @param  int $articleId  The article id in the database.
      * @return \Illuminate\Http\RedirectResponse

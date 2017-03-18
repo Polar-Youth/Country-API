@@ -41,6 +41,8 @@ class CountryController extends Controller
     /**
      * Get the country listing.
      *
+     * @see:unit-test   TODO: write unit test.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -56,6 +58,9 @@ class CountryController extends Controller
 
     /**
      * Create a new country in the database.
+     *
+     * @see:unit-test   TODO: Write unit test (validation fails).
+     * @see:unit-test   TODO: Write unit test (validation success).
      *
      * @param  CountryValidation $input The user input validation;
      * @return \Illuminate\Http\RedirectResponse
@@ -73,6 +78,8 @@ class CountryController extends Controller
     /**
      * Display specific information about a country.
      *
+     * @see:unit-test   TODO: Write unit test.
+     *
      * @param  int $countryId the country id in the database.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -86,6 +93,9 @@ class CountryController extends Controller
 
     /**
      * Update a country in the database.
+     *
+     * @see:unit-test   TODO: Write unit test (validation fails).
+     * @see:unit-test   TODO: Write unit test (validation passes).
      *
      * @param  CountryValidation $input      The user input validation.
      * @param  int               $countryId  The id for the country.
@@ -105,6 +115,8 @@ class CountryController extends Controller
 
     /**
      * Delete a country out off the database.
+     *
+     * @see:unit-test   TODO: Write unit test
      *
      * @param  int $countryId The id for the country.
      * @return \Illuminate\Http\RedirectResponse
