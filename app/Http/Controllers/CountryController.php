@@ -111,7 +111,7 @@ class CountryController extends Controller
      */
     public function delete($countryId)
     {
-        if ($this->dbCountry->delete($countryId)) {
+        if ($this->dbCountry->find($countryId)->delete()) {
             session()->flash('class', 'alert alert-success');
             session()->flash('message', trans('country.flash-delete'));
         }

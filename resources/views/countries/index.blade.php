@@ -87,7 +87,9 @@
 
                                                         <td> {{-- Functions --}}
                                                             <a class="label label-warning" href="">Aanpassen</a>
-                                                            <a class="label label-success" href="">Verwijder</a>
+                                                            <a class="label label-success" href="{{ route('country.delete', ['articleId' => $country->id]) }}">
+                                                                Verwijder
+                                                            </a>
                                                         </td> {{-- /Functions --}}
                                                     </tr>
                                                 @endforeach
