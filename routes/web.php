@@ -19,4 +19,5 @@ Route::get('/home', 'HomeController@backend');
 
 // Country routes
 Route::get('/countries', 'CountryController@index');
+Route::get('/countries/{countryId}', 'CountryController@show')->name('country.show');
 Route::post('/countries/store', 'CountryController@store')->name('country.store');

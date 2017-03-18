@@ -30,7 +30,7 @@ class CountryValidation extends FormRequest
     {
         return [
             'name'          => 'required',
-            'continent'     => 'required',
+            'continent_id'  => 'required',
             'code'          => 'required',
             'iso_alpha_2'   => 'required',
             'iso_alpha_3'   => 'required',

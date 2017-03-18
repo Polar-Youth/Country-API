@@ -23,11 +23,21 @@
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">
+                            Capital: <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="col-sm-9">
+                            <input class="form-control" name="capital" placeholder="Capital city" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">
                             Continent: <span class="text-danger">*</span>
                         </label>
 
                         <div class="col-md-9">
-                            <select name="continent" class="form-control">
+                            <select name="continent_id" class="form-control">
                                 <option value="">-- Select continent --</option>
 
                                 @foreach ($continents as $continent)
@@ -64,7 +74,6 @@
                             <input type="text" name="fips_code" class="form-control" placeholder="FIPS code">
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">

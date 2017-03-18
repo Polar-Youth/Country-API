@@ -66,21 +66,24 @@
                                                 <tr>
                                                     <th>#</th> {{-- Used to place the flag. --}}
                                                     <th>Name:</th>
-                                                    <th>ISO code:</th>
-                                                    <th>Capital:</th>
-                                                    <th>Continent:</th>
-                                                    <th colspan="2">Created at:</th> {{-- Colspan 2 needed because the functions will embed in this. --}}
+                                                    <th>ISO 3661: (alpha-2)</th>
+                                                    <th>ISO 3661: (alpha-3)</th>
+                                                   <th>Capital:</th>
+                                                    <th colspan="2">Continent:</th> {{-- Colspan 2 needed because the functions will embed in this. --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($country as $countries)
+                                                @foreach ($countries as $country)
                                                     <tr>
-                                                        <td><img src="" alt="{{ $country->name }}"></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>{{ $country->created_at->format('d/m/Y') }}</td>
+                                                        <td><code>#{{ $country->id }}</code></td>
+                                                        <td>
+                                                            <img style="vertical-align: middle; height: 13px; margin-right: 5px;" src="{{ asset('images/flags/BE.png') }}" alt="{{ $country->name }}">
+                                                            <a href="{{ route('country.show', ['articleId' => $country->id]) }}">{{ $country->name }}</a>
+                                                        </td>
+                                                        <td>{{ $country->iso_alpha_2 }}</td>
+                                                        <td>{{ $country->iso_alpha_3 }}</td>
+                                                        <td>{{ $country->capital }}</td>
+                                                        <td>{{ $country->continent->name }}</td>
 
                                                         <td> {{-- Functions --}}
                                                             <a class="label label-warning" href="">Aanpassen</a>

@@ -30,4 +30,14 @@ class Country extends Model
     {
         return $this->belongsTo(Continents::class, 'continent_id');
     }
+
+    public function divisions()
+    {
+        return $this->belongsToMany()->withTimestamps();
+    }
+
+    public function borders()
+    {
+        return $this->belongsToMany()->withTimestamps();
+    }
 }

@@ -71,6 +71,20 @@ class CountryController extends Controller
     }
 
     /**
+     * Display specific information about a country.
+     *
+     * @param  int $countryId the country id in the database.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($countryId)
+    {
+        $data['country'] = $this->dbCountry->with(['continent'])->find($countryId);
+        $data['title']   = $data['country']->name;
+
+        return view('countries.show', $data);
+    }
+
+    /**
      * Update a country in the database.
      *
      * @param  CountryValidation $input      The user input validation.
