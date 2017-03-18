@@ -7,9 +7,9 @@ use App\Http\Transformers\CountryTransformer;
 use App\Traits\ApiRendering;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use League\Fractal\Pagination\Cursor;
 use Symfony\Component\HttpFoundation\Response;
-use League\Fractal\Resource\Collection;
 
 /**
  * Class ApiCountryController
@@ -21,9 +21,24 @@ class ApiCountryController extends Controller
     use ApiRendering;
 
     /**
+     * API ACL Permissions
+     *
+     * @return array
+     */
+    protected $apiMethods = [
+        'update' => ['level' => 20], // Volunteer
+        'delete' => ['level' => 30], // Administrator.
+    ];
+
+    /**
      * @var Country
      */
     private $dbCountry;
+
+    /**
+     * @var $rules
+     */
+    public $rules = [];
 
     /**
      * ApiCountryController constructor.
@@ -33,6 +48,15 @@ class ApiCountryController extends Controller
     public function __construct(Country $dbCountry)
     {
         $this->dbCountry = $dbCountry;
+
+            //'iso_alpha_2'   => 'required',
+            //'iso_alpha_3'   => 'required',
+            //'fips_code'     => 'required',
+
+        // Validation rules
+        $this->rules['name']         = 'required';
+        $this->rules['code']         = 'required';
+        $this->rules['continent_id'] = 'required';
     }
 
     /**
@@ -62,7 +86,7 @@ class ApiCountryController extends Controller
             $res['status']  = Response::HTTP_OK;
 
             if ((string) $res['accept'] === 'application/xml' || (string) $res['accept'] === 'text/xml') {
-                // TODO: Add librabry for xml rendering.
+                // TODO: Add library for xml rendering.
                 // TODO: Implement this in V2.0.0
 
                 // response($res['content'], $res['status'])
@@ -76,6 +100,25 @@ class ApiCountryController extends Controller
         // No data found.
         return response(['message' => 'Resource not found.'], Response::HTTP_OK)
             ->header('Content-Type', $this->checkAcceptEncoding());
+
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function create(Request $request)
+    {
+        $validator = Validator::make($request->all(), $this->rules);
+
+        if ($validator->fails()) { // Validation fails.
+
+        }
+    }
+
+    public function delete($countryId)
+    {
 
     }
 }

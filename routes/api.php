@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::get('countries', 'ApiCountryController@index');
+Route::post('countries', 'ApiCountryController@create');
