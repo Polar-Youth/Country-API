@@ -77,7 +77,7 @@
                                                     <tr>
                                                         <td><code>#{{ $country->id }}</code></td>
                                                         <td>
-                                                            <img style="vertical-align: middle; height: 13px; margin-right: 5px;" src="{{ asset('images/flags/BE.png') }}" alt="{{ $country->name }}">
+                                                            <img style="height: 12px; width:15px;" src="{{ asset('images/' . $country->iso_alpha_2 . '.svg') }}" alt="{{ $country->name }}">
                                                             <a href="{{ route('country.show', ['articleId' => $country->id]) }}">{{ $country->name }}</a>
                                                         </td>
                                                         <td>{{ $country->iso_alpha_2 }}</td>
@@ -97,10 +97,10 @@
                                 @endif
                             </div> {{-- /Country tab --}}
 
-                            <div> {{-- Additions tab --}}
+                            <div role="tabpanel" class="tab-pane active" id="waiting" style="padding-top: 10px;"> {{-- Additions tab --}}
                             </div> {{-- /Additions tabs --}}
 
-                            <div> {{-- Changes tab --}}
+                            <div role="tabpanel" class="tab-pane active" id="changes" style="padding-top: 10px;"> {{-- Changes tab --}}
                             </div> {{-- /Changes tab --}}
 
                         </div> {{-- /Tab content --}}

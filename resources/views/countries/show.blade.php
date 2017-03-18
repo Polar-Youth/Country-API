@@ -11,7 +11,10 @@
                             <div class="col-md-6">
                                 <dl class="dl-horizontal">
                                     <dt>Country name:</dt>
-                                    <dd>{{ $country->name }}</dd>
+                                    <dd>
+                                        <img style="height: 12px; width:15px;" src="{{ asset('images/' . $country->iso_alpha_2 . '.svg') }}" alt="{{ $country->name }}">
+                                        {{ $country->name }}
+                                    </dd>
 
                                     <dt>ISO Alpha-2:</dt>
                                     <dd>{{ $country->iso_alpha_2 }}</dd>

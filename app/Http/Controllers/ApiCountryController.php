@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Http\Transformers\CountryTransformer;
 use App\Traits\ApiRendering;
+use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use League\Fractal\Pagination\Cursor;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,7 @@ class ApiCountryController extends Controller
      */
     protected $apiMethods = [
         'update' => ['level' => 20], // Volunteer
+        'create' => ['level' => 20], // Volunteer
         'delete' => ['level' => 30], // Administrator.
     ];
 
@@ -49,14 +52,13 @@ class ApiCountryController extends Controller
     {
         $this->dbCountry = $dbCountry;
 
-            //'iso_alpha_2'   => 'required',
-            //'iso_alpha_3'   => 'required',
-            //'fips_code'     => 'required',
-
         // Validation rules
         $this->rules['name']         = 'required';
         $this->rules['code']         = 'required';
         $this->rules['continent_id'] = 'required';
+        $this->rules['iso_alpha_2']  = 'required';
+        $this->rules['iso_alpha_3']  = 'required';
+        $this->rules['fips_code']    = 'required';
     }
 
     /**
@@ -103,17 +105,48 @@ class ApiCountryController extends Controller
 
     }
 
-    public function update()
-    {
-
-    }
-
-    public function create(Request $request)
+    /**
+     * Update a country resource in the API.
+     *
+     * @param  Request  $request  The user input interface.
+     * @param  Log      $log      The logging interface.
+     * @return mixed
+     */
+    public function create(Request $request, Log $log)
     {
         $validator = Validator::make($request->all(), $this->rules);
 
         if ($validator->fails()) { // Validation fails.
+            $content['http_code'] = Response::HTTP_BAD_REQUEST;
+            $content['message']   = 'There are validation errors';
+            $content['errors']    = $validator->errors()->all();
 
+            return response($content, Response::HTTP_BAD_REQUEST)
+                ->header('Content-Type', 'application/json');
+        }
+
+        // No validation errors found so.
+        // So we can move on with our logic.
+        // We use custom fields. Because the ux in the API.
+
+        try { // Try to insert the new data through Elo. mass-assign.
+            $this->dbCountry->create($request->all());
+
+            // Set the output content.
+            $content['http_code'] = Response::HTTP_ACCEPTED;
+            $content['message']   = 'The country has been updated';
+
+            return response($content, Response::HTTP_ACCEPTED)
+                ->header('Content-Type', 'application/json');
+
+        } catch (MassAssignmentException $exception) {
+            $content['http_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
+            $content['message']   = 'Oops there is something wrong.';
+
+            $log->critical($exception); // Write the exception to the log.
+
+            return response($content, Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->header('Content-Type', 'application/json');
         }
     }
 
