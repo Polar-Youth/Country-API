@@ -24,9 +24,8 @@ class HomeController extends Controller
     /**
      * Get the front-end index. 
      *
-     * @see:unit-test   TODO: write unit test.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see:unit-test   \Tests\Feature\HomeRouteTest::testIndexRoute()
+     * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function frontend()
     {
@@ -37,9 +36,8 @@ class HomeController extends Controller
     /**
      * Get the backend index. 
      *
-     * @see:unit-test   TODO: write unit test.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see:unit-test   \Test\Feature\HomeRouteTest::testBackendRoute()
+     * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function backend()
     {

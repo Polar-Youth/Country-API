@@ -14,8 +14,8 @@
 Auth::routes();
 
 // Home Routes.
-Route::get('/', 'HomeController@frontend');
-Route::get('/home', 'HomeController@backend');
+Route::get('/', 'HomeController@frontend')->name('home.frontend');
+Route::get('/home', 'HomeController@backend')->name('home.backend');
 
 // Country routes
 Route::get('/countries', 'CountryController@index');
