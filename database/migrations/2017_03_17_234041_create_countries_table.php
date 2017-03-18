@@ -15,20 +15,20 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('continent_id');
-            $table->string('code');
-            $table->string('name');
-            $table->string('flag');
-            $table->string('fips_code');
-            $table->string('iso_code');
-            $table->string('north_num');
-            $table->string('south_num');
-            $table->string('east_num');
-            $table->string('west_num');
-            $table->string('capital');
-            $table->string('iso_alpha_2');
-            $table->string('iso_alpha_3');
-            $table->string('geoname_id');
+            $table->integer('continent_id')->nullable();
+            $table->string('code')->nullable();
+            $table->string('name')->nullable();
+            $table->string('flag')->nullable();
+            $table->string('fips_code')->nullable();
+            $table->string('iso_code')->nullable();
+            $table->string('north_num')->nullable();
+            $table->string('south_num')->nullable();
+            $table->string('east_num')->nullable();
+            $table->string('west_num')->nullable();
+            $table->string('capital')->nullable();
+            $table->string('iso_alpha_2')->nullable();
+            $table->string('iso_alpha_3')->nullable();
+            $table->string('geoname_id')->nullable();
             $table->timestamps();
         });
     }
