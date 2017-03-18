@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Continents;
 use App\Country;
 use App\Http\Requests\CountryValidation;
 use Illuminate\Http\Request;
@@ -19,15 +20,22 @@ class CountryController extends Controller
     private $dbCountry;
 
     /**
-     * CountryController constructor
-     * .
-     * @param Country $dbCountry
+     * @var Continents
      */
-    public function __construct(Country $dbCountry)
-    {
-        $this->middleware('auth');
+    private $dbContinent;
 
-        $this->dbCountry = $dbCountry;
+    /**
+     * CountryController constructor
+     *
+     * @param Continents  $dbContinent
+     * @param Country     $dbCountry
+     */
+    public function __construct(Country $dbCountry, Continents $dbContinent)
+    {
+        // $this->middleware('auth');
+
+        $this->dbCountry   = $dbCountry;
+        $this->dbContinent = $dbContinent;
     }
 
     /**
@@ -39,15 +47,27 @@ class CountryController extends Controller
     {
         $model = $this->dbCountry;
 
-        $data['title']     = trans('');
-        $data['countries'] = $model->with($this->countryRelations)->paginate(15);
+        $data['title']      = trans('country.title-index');
+        $data['countries']  = $model->with(['continent'])->paginate(15);
+        $data['continents'] = $this->dbContinent->all();
 
         return view('countries.index', $data);
     }
 
-    public function edit()
+    /**
+     * Create a new country in the database.
+     *
+     * @param  CountryValidation $input The user input validation;
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CountryValidation $input)
     {
+        if ($this->dbCountry->create($input->except(['_token']))) {
+            session()->flash('class', 'alert alert-danger');
+            session()->flash('meesage', trans('country.flash-create'));
+        }
 
+        return back();
     }
 
     /**
@@ -59,6 +79,13 @@ class CountryController extends Controller
      */
     public function update(CountryValidation $input, $countryId)
     {
+        $data = $this->dbCountry->find($countryId);
+
+        if ($data->update($input->except['_token'])) {
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', trans('country.flash-udate'));
+        }
+
         return back();
     }
 

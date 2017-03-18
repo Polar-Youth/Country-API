@@ -13,5 +13,10 @@
 
 Auth::routes();
 
+// Home Routes.
 Route::get('/', 'HomeController@frontend');
 Route::get('/home', 'HomeController@backend');
+
+// Country routes
+Route::get('/countries', 'CountryController@index');
+Route::post('/countries/store', 'CountryController@store')->name('country.store');

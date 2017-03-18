@@ -4,6 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class CountryValidation
+ *
+ * @package App\Http\Requests
+ */
 class CountryValidation extends FormRequest
 {
     /**
@@ -13,7 +18,7 @@ class CountryValidation extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +29,12 @@ class CountryValidation extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'          => 'required',
+            'continent'     => 'required',
+            'code'          => 'required',
+            'iso_alpha_2'   => 'required',
+            'iso_alpha_3'   => 'required',
+            'fips_code'     => 'required',
         ];
     }
 }
