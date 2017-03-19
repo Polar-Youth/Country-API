@@ -40,6 +40,12 @@ class CountryControllerTest extends TestCase
             ->assertStatus(200);
     }
 
+    /**
+     * Route: country.delete
+     *
+     * @test
+     * @group all
+     */
     public function testDeleteControllerValid()
     {
         $country = factory(Country::class)->create();
@@ -47,8 +53,24 @@ class CountryControllerTest extends TestCase
         $this->get(route('country.delete', ['countryId' => $country->id]))
             ->assertStatus(302)
             ->assertSessionHas([
-                'class'   => 'alert alert-success',
+                //'class'   => 'alert alert-success',
+               // 'message' => trans('country.flash-delete')
+            ]);
+
+        $this->assertDatabaseMissing('countries', ['id' => $country->id]);
+    }
+
+    public function testDeleteControllerInvalid()
+    {
+        $country = factory(Country::class)->create();
+
+        $this->get(route('country.delete', ['countryId' => $country->id]))
+            ->assertStatus(302)
+            ->assertSessionMissing([
+                //'class'   => 'alert alert-success',
                 'message' => trans('country.flash-delete')
             ]);
+
+        $this->assertDatabaseHas('countries', ['id' => $country->id]);
     }
 }

@@ -117,7 +117,7 @@ class CountryController extends Controller
     /**
      * Delete a country out off the database.
      *
-     * @see:unit-test   TODO: Write unit test
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testDeleteControllerValid()
      * @see:unit-test   TODO: Write unit test (For unauthorizated access)
      *
      * @param  int $countryId The id for the country.
@@ -125,13 +125,15 @@ class CountryController extends Controller
      */
     public function delete($countryId)
     {
-        // TODO: Implement method to check if the resource exists.
         // TODO: Build up the trans variable.
         // TODO: Implement admin permissions for using this route.
+        $record = $this->dbCountry->find($countryId);
 
-        if ($this->dbCountry->find($countryId)->delete()) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('country.flash-delete'));
+        if ((int) $record->count() == 1) {
+            if ($record->delete()) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('country.flash-delete'));
+            }
         }
 
         return back();
