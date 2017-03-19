@@ -60,6 +60,12 @@ class CountryControllerTest extends TestCase
         $this->assertDatabaseMissing('countries', ['id' => $country->id]);
     }
 
+    /**
+     * ROUTE: country.delete
+     *
+     * @test
+     * @group all
+     */
     public function testDeleteControllerInvalid()
     {
         $country = factory(Country::class)->create();
