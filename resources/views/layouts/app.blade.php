@@ -8,10 +8,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
+    {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- Scripts -->
+    {{-- Scripts --}}
     <script src="https://use.fontawesome.com/2ae53ff47d.js"></script>
     <script>
         window.Laravel = {!! json_encode([
@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
+                    {{-- Collapsed Hamburger --}}
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
                         <span class="icon-bar"></span>
@@ -33,14 +33,14 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <!-- Branding Image -->
+                    {{-- Branding Image --}}
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
+                    {{-- Left Side Of Navbar --}}
                     <ul class="nav navbar-nav">
                         <li><a href=""><span class="fa fa-flag" aria-hidden="true"></span> Countries</a></li>
                         <li><a href=""><span class="fa fa-file-code-o" aria-hidden="true"></span> API Docs</a></li>
@@ -48,9 +48,9 @@
                         <li><a href=""><span class="fa fa-newspaper-o" aria-hidden="true"></span> News</a></li>
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+                    {{-- Right Side Of Navbar --}}
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
+                        {{-- Authentication Links --}}
                         @if (Auth::guest())
                             <li>
                                 <a href="{{ route('login') }}">

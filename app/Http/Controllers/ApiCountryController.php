@@ -156,19 +156,32 @@ class ApiCountryController extends Controller
         }
     }
 
+    /**
+     * Delete a country throught the API.
+     *
+     * @see:unit-test   TODO: Write unit test (no resource).
+     * @see:unit-test   TODO: Write unit test (resource found.)
+     *
+     * @param  int  $countryId The country id in the databas.
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function delete($countryId)
     {
         try {
             $country = $this->dbCountry->findOrfail($countryId)->delete();
 
-            $content['http_code'] = '';
-            $content['message']   = '';
+            $content['http_code'] = Response::HTTP_GONE;
+            $content['message']   = "$country->name has been deleted.";
 
             return response($content, Response::HTTP_GONE)
-                ->header('Content-Type', 'application/json')
+                ->header('Content-Type', 'application/json');
 
         } catch (ModelNotFoundException $exception) {
+            $content['http_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
+            $content['message']   = 'Oops something went wrong.';
 
+            return response($content, Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->header('Content-Type', 'application/json');
         }
     }
 }

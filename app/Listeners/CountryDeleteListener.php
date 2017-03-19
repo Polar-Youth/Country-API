@@ -6,6 +6,11 @@ use App\Events\CountryDelete;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class CountryDeleteListener
+ *
+ * @package App\Listeners
+ */
 class CountryDeleteListener
 {
     /**
