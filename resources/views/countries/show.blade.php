@@ -35,16 +35,16 @@
                             <div class="col-md-6">
                                 <dl class="dl-horizontal">
                                     <dt>Graden Noord:</dt> 
-                                    <dd><code>{{ (! empty($country->north_num)) ? $data->north_num : 'Not given' }}</code></dd>
+                                    <dd><code>{{ (! empty($country->north_num)) ? $country->north_num : 'Not given' }}</code></dd>
 
                                     <dt>Graden Oost:</dt>  
-                                    <dd><code>{{ (! empty($country->east_num)) ? $data->east_num : 'Not given' }}</code><dd>
+                                    <dd><code>{{ (! empty($country->east_num)) ? $country->east_num : 'Not given' }}</code><dd>
 
                                     <dt>Graden Zuid:</dt>  
-                                    <dd><code>{{ (! empty($country->south_num)) ? $data->south_num  : 'Not given'}}</code></dd>
+                                    <dd><code>{{ (! empty($country->south_num)) ? $country->south_num  : 'Not given'}}</code></dd>
 
                                     <dt>Graden West:</dt>  
-                                    <dd><code>{{ (! empty($country->west_num)) ? $data->west_num : 'Not Given' }}</code></dd>
+                                    <dd><code>{{ (! empty($country->west_num)) ? $country->west_num : 'Not Given' }}</code></dd>
                                 </dl>
                             </div>
                        </div>

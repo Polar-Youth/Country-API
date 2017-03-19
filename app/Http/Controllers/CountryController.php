@@ -41,7 +41,7 @@ class CountryController extends Controller
     /**
      * Get the country listing.
      *
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature|CountryControllerTest::testIndexController()
      * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -77,14 +77,14 @@ class CountryController extends Controller
     /**
      * Display specific information about a country.
      *
-     * @see:unit-test   TODO: Write unit test.
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testShowController()
      *
      * @param  int $countryId the country id in the database.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($countryId)
     {
-        $data['country'] = $this->dbCountry->with(['continent'])->find($countryId);
+        $data['country'] = $this->dbCountry->with(['continent', ])->find($countryId);
         $data['title']   = $data['country']->name;
 
         return view('countries.show', $data);
@@ -95,6 +95,7 @@ class CountryController extends Controller
      *
      * @see:unit-test   TODO: Write unit test (validation fails).
      * @see:unit-test   TODO: Write unit test (validation passes).
+     * @see:unit-test   TODO: Write unit test (No resource).
      *
      * @param  CountryValidation $input      The user input validation.
      * @param  int               $countryId  The id for the country.
@@ -117,21 +118,22 @@ class CountryController extends Controller
     /**
      * Delete a country out off the database.
      *
-     * @see:unit-test   TODO: Write unit test
-     * @see:unit-test   TODO: Write unit test (For unauthorizated access)
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testDeleteControllerValid()
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testDeleteControllerInvalid()
      *
      * @param  int $countryId The id for the country.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete($countryId)
     {
-        // TODO: Implement method to check if the resource exists.
-        // TODO: Build up the trans variable.
         // TODO: Implement admin permissions for using this route.
+        $record = $this->dbCountry->find($countryId);
 
-        if ($this->dbCountry->find($countryId)->delete()) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('country.flash-delete'));
+        if ((int) count($record) == 1) {
+            if ($record->delete()) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('country.flash-delete', ['country' => $record->name]));
+            }
         }
 
         return back();

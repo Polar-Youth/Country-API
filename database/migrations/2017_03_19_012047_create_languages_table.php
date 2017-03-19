@@ -13,6 +13,8 @@ class CreateLanguagesTable extends Migration
      */
     public function up()
     {
+        // TODO: Register factory.
+        
         Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('iso_639_1')->nullable();

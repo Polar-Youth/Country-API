@@ -24,6 +24,26 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Country::class, function (Faker\Generator $faker) {
+    return [
+        'continent_id'  => function () { return factory(App\Continents::class)->create()->id; },
+        'code'          => $faker->randomNumber(3),
+        'name'          => $faker->country,
+        'flag'          => $faker->imageUrl(),
+        'fips_code'     => $faker->countryCode,
+        'iso_code'      => $faker->iso8601,
+        'north_num'     => $faker->latitude,
+        'south_num'     => $faker->latitude,
+        'east_num'      => $faker->latitude,
+        'west_num'      => $faker->latitude,
+        'capital'       => $faker->city,
+        'iso_alpha_2'   => $faker->countryISOAlpha3,
+        'iso_alpha_3'   => $faker->countryISOAlpha3,
+        'geoname_id'    => $faker->numberBetween(0, 100)
+    ];
+});
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     return [
 

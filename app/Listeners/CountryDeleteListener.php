@@ -31,6 +31,6 @@ class CountryDeleteListener
      */
     public function handle(CountryDelete $event)
     {
-        dd('Delete eloquent listener');
+        // dd('Delete eloquent listener');
     }
 }
