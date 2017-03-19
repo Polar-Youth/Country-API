@@ -59,6 +59,7 @@ class Country extends Model
      */
     public function borders()
     {
-        return $this->belongsToMany(Country::class, 'country_border')->withTimestamps();
+        return $this->belongsToMany(Country::class, 'country_border', 'country_id', 'border_id')
+            ->withTimestamps();
     }
 }

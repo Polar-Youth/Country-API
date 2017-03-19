@@ -53,8 +53,8 @@ class CountryControllerTest extends TestCase
         $this->get(route('country.delete', ['countryId' => $country->id]))
             ->assertStatus(302)
             ->assertSessionHas([
-                //'class'   => 'alert alert-success',
-               // 'message' => trans('country.flash-delete')
+                'class'   => 'alert alert-success',
+                'message' => trans('country.flash-delete')
             ]);
 
         $this->assertDatabaseMissing('countries', ['id' => $country->id]);
@@ -64,10 +64,10 @@ class CountryControllerTest extends TestCase
     {
         $country = factory(Country::class)->create();
 
-        $this->get(route('country.delete', ['countryId' => $country->id]))
+        $this->get(route('country.delete', ['countryId' => 145]))
             ->assertStatus(302)
             ->assertSessionMissing([
-                //'class'   => 'alert alert-success',
+                'class'   => 'alert alert-success',
                 'message' => trans('country.flash-delete')
             ]);
 

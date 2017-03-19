@@ -84,7 +84,7 @@ class CountryController extends Controller
      */
     public function show($countryId)
     {
-        $data['country'] = $this->dbCountry->with(['continent'])->find($countryId);
+        $data['country'] = $this->dbCountry->with(['continent', ])->find($countryId);
         $data['title']   = $data['country']->name;
 
         return view('countries.show', $data);
@@ -129,7 +129,7 @@ class CountryController extends Controller
         // TODO: Implement admin permissions for using this route.
         $record = $this->dbCountry->find($countryId);
 
-        if ((int) $record->count() == 1) {
+        if ((int) count($record) == 1) {
             if ($record->delete()) {
                 session()->flash('class', 'alert alert-success');
                 session()->flash('message', trans('country.flash-delete'));
