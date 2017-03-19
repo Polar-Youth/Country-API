@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/country-api":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/country-api","hostpath":"R:/Clients/Polar-Youth/Country-API","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"R:/Clients/Polar-Youth/Country-API","disabled":false,"__vagrantfile":true}}}

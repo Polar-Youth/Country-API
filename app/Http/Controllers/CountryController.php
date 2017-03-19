@@ -77,7 +77,8 @@ class CountryController extends Controller
     /**
      * Display specific information about a country.
      *
-     * @see:unit-test   \Tests\Feature\CountryControllerTest::testShowController()
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testShowControllerValid()
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testDeleteControllerInvalid()
      *
      * @param  int $countryId the country id in the database.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -85,9 +86,14 @@ class CountryController extends Controller
     public function show($countryId)
     {
         $data['country'] = $this->dbCountry->with(['continent', ])->find($countryId);
-        $data['title']   = $data['country']->name;
 
-        return view('countries.show', $data);
+        if ($data['country']) {
+            $data['title']   = $data['country']->name;
+
+            return view('countries.show', $data);
+        }
+
+        return redirect()->route('country');
     }
 
     /**
@@ -129,7 +135,7 @@ class CountryController extends Controller
         // TODO: Implement admin permissions for using this route.
         $record = $this->dbCountry->find($countryId);
 
-        if ((int) count($record) == 1) {
+        if ($record) { // Check if the record is found.
             if ($record->delete()) {
                 session()->flash('class', 'alert alert-success');
                 session()->flash('message', trans('country.flash-delete', ['country' => $record->name]));

@@ -15,6 +15,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class CountryControllerTest extends TestCase
 {
+    use DatabaseMigrations, DatabaseTransactions;
+
     /**
      * Route: country
      *
@@ -32,12 +34,26 @@ class CountryControllerTest extends TestCase
      * @test
      * @group all
      */
-    public function testShowController()
+    public function testShowControllerValid()
     {
         $country = factory(Country::class)->create();
 
         $this->get(route('country.show', ['countryId' => $country->id]))
             ->assertStatus(200);
+    }
+
+
+    /**
+     * Route: country.show
+     *
+     * @test
+     * @group all
+     */
+    public function testShowControllerInvalid()
+    {
+        $this->get(route('country.show', ['countyId' => 452]))
+            ->assertStatus(302)
+            ->assertRedirect(route('country'));
     }
 
     /**
@@ -50,11 +66,11 @@ class CountryControllerTest extends TestCase
     {
         $country = factory(Country::class)->create();
 
-        $this->get(route('country.delete', ['countryId' => $country->id]))
-            ->assertStatus(302)
-            ->assertSessionHas([
+        $route = $this->get(route('country.delete', ['countryId' => $country->id]));
+        $route->assertStatus(302);
+        $route->assertSessionHas([
                 'class'   => 'alert alert-success',
-                'message' => trans('country.flash-delete')
+                'message' => trans('country.flash-delete', ['country' => $country->name])
             ]);
 
         $this->assertDatabaseMissing('countries', ['id' => $country->id]);
@@ -70,11 +86,11 @@ class CountryControllerTest extends TestCase
     {
         $country = factory(Country::class)->create();
 
-        $this->get(route('country.delete', ['countryId' => 145]))
-            ->assertStatus(302)
-            ->assertSessionMissing([
+        $route = $this->get(route('country.delete', ['countryId' => 145]));
+        $route->assertStatus(302);
+        $route->assertSessionMissing([
                 'class'   => 'alert alert-success',
-                'message' => trans('country.flash-delete')
+                'message' => trans('country.flash-delete', ['country' => $country->id])
             ]);
 
         $this->assertDatabaseHas('countries', ['id' => $country->id]);
