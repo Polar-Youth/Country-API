@@ -36,7 +36,19 @@ class CountryControllerTest extends TestCase
     {
         $country = factory(Country::class)->create();
 
-        $this->get(route('country.show', ['countryId' => $country->show]))
+        $this->get(route('country.show', ['countryId' => $country->id]))
             ->assertStatus(200);
+    }
+
+    public function testDeleteControllerValid()
+    {
+        $country = factory(Country::class)->create();
+
+        $this->get(route('country.delete', ['countryId' => $country->id]))
+            ->assertStatus(302)
+            ->assertSessionHas([
+                'class'   => 'alert alert-success',
+                'message' => trans('country.flash-delete')
+            ]);
     }
 }
