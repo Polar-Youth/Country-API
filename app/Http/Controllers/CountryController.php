@@ -41,7 +41,7 @@ class CountryController extends Controller
     /**
      * Get the country listing.
      *
-     * @see:unit-test   \Tests\Feature|testIndexController()
+     * @see:unit-test   \Tests\Feature|CountryControllerTest::testIndexController()
      * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -77,7 +77,7 @@ class CountryController extends Controller
     /**
      * Display specific information about a country.
      *
-     * @see:unit-test   TODO: Write unit test.
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testShowController()
      *
      * @param  int $countryId the country id in the database.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
