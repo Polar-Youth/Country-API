@@ -42,10 +42,26 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     {{-- Left Side Of Navbar --}}
                     <ul class="nav navbar-nav">
-                        <li><a href=""><span class="fa fa-flag" aria-hidden="true"></span> Countries</a></li>
-                        <li><a href=""><span class="fa fa-file-code-o" aria-hidden="true"></span> API Docs</a></li>
-                        <li><a href=""><span class="fa fa-plus" aria-hidden="true"></span> New volunteer</a></li>
-                        <li><a href=""><span class="fa fa-newspaper-o" aria-hidden="true"></span> News</a></li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-flag" aria-hidden="true"></span> Countries
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-file-code-o" aria-hidden="true"></span> API Docs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-plus" aria-hidden="true"></span> New volunteer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> News
+                            </a>
+                        </li>
                     </ul>
 
                     {{-- Right Side Of Navbar --}}
@@ -54,7 +70,7 @@
                         @if (Auth::guest())
                             <li>
                                 <a href="{{ route('login') }}">
-                                    <span class="fa fa-sign-in"></span> Login
+                                    <span class="fa fa-sign-in"></span> @lang('auth.nav-login')
                                 </a>
                             </li>
                         @else
@@ -73,7 +89,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="">
-                                            <span class="fa fa-cogs"></span> Account settings
+                                            <span class="fa fa-cogs"></span> @lang('nav.account-settings')
                                         </a>
                                     </li>
 
@@ -81,7 +97,7 @@
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            <span class="fa fa-sign-out" aria-hidden="true"></span> Logout
+                                            <span class="fa fa-sign-out" aria-hidden="true"></span> @lang('auth.nav-logout')
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

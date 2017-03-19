@@ -4,14 +4,14 @@ return [
 
     /**
      * --------------------------------------------------------------------------
-     * Country Section Language Lines
+     * Navigation Section Language Lines
      * --------------------------------------------------------------------------
      *
-     * The following language lines are used by the country section off,
+     * The following language lines are used by the Navigation section off,
      * this application. Here u can modify the text.
      *
      */
 
-    'flash-delete' => 'The country :country has been deleted.'
+    'account-settings' => 'Account settings',
 
 ];
