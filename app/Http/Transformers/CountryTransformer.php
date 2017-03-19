@@ -22,6 +22,7 @@ class CountryTransformer extends Fractal\TransformerAbstract
    {
        return [
             'name'     => $country->name,
+            'flag'     => asset('images/' . $country->iso_alpha_2 . '.svg'),
             'iso_3166' => [
                 'alpha_2' => $country->iso_alpha_2,
                 'alpha_3' => $country->iso_alpha_3
