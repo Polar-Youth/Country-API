@@ -59,7 +59,7 @@
                             </li>
                         @else
                             <li>
-                                <a href="">
+                                <a href="{{ route('country') }}">
                                     <span class="fa fa-bell-o" aria-hidden="true"></span>
                                     <span class="badge">0</span>
                                 </a>
