@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 /**
  * Class CreeateBordeTable
  */
-class CreeateBorderTable extends Migration
+class CreateBorderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -31,6 +31,6 @@ class CreeateBorderTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfexists('country_border');
     }
 }

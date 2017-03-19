@@ -12,6 +12,9 @@ return [
      *
      */
 
-    'account-settings' => 'Account settings',
-
+    'account-settings'  => 'Account settings',
+    'api-docs'          => 'API Docs',
+    'new-volunteer'     => 'New volunteer',
+    'countries'         => 'Countries',
+    'news'              => 'News'
 ];

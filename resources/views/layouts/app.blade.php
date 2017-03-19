@@ -44,22 +44,22 @@
                     <ul class="nav navbar-nav">
                         <li>
                             <a href="">
-                                <span class="fa fa-flag" aria-hidden="true"></span> Countries
+                                <span class="fa fa-flag" aria-hidden="true"></span> @lang('nav.countries')
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <span class="fa fa-file-code-o" aria-hidden="true"></span> API Docs
+                                <span class="fa fa-file-code-o" aria-hidden="true"></span> @lang('nav.api-docs')
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <span class="fa fa-plus" aria-hidden="true"></span> New volunteer
+                                <span class="fa fa-plus" aria-hidden="true"></span> @lang('nav.new-volunteer')
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> News
+                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> @lang('news')
                             </a>
                         </li>
                     </ul>
