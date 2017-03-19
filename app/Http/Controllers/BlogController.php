@@ -122,12 +122,15 @@ class BlogController extends Controller
      * Delete a article in the database.
      *
      * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   TODO: write unit test when no id exists.
      *
      * @param  int $articleId  The article id in the database.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($articleId)
     {
+        // TODO: Check if news article can be deleted.
+
         if ($this->dbArticle->find($articleId)->delete()) {
             session()->flash('class', 'alert alert-success');
             session()->flash('message', trans('news.flash-delete'));

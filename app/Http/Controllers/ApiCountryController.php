@@ -6,6 +6,7 @@ use App\Country;
 use App\Http\Transformers\CountryTransformer;
 use App\Traits\ApiRendering;
 use Illuminate\Database\Eloquent\MassAssignmentException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
@@ -115,7 +116,7 @@ class ApiCountryController extends Controller
      *
      * @param  Request  $request  The user input interface.
      * @param  Log      $log      The logging interface.
-     * @return mixed
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function create(Request $request, Log $log)
     {
@@ -157,6 +158,17 @@ class ApiCountryController extends Controller
 
     public function delete($countryId)
     {
+        try {
+            $country = $this->dbCountry->findOrfail($countryId)->delete();
 
+            $content['http_code'] = '';
+            $content['message']   = '';
+
+            return response($content, Response::HTTP_GONE)
+                ->header('Content-Type', 'application/json')
+
+        } catch (ModelNotFoundException $exception) {
+
+        }
     }
 }
