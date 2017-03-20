@@ -185,6 +185,12 @@ class CountryControllerTest extends TestCase
         ]);
     }
 
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
     public function testResourceUpdateSuccess()
     {
         $country = factory(Country::class)->create();
@@ -199,5 +205,44 @@ class CountryControllerTest extends TestCase
 
         $this->assertDatabaseHas('countries', $this->countryInput());
         $this->assertDatabaseMissing('countries', $this->dbCheck($country));
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceInsertError()
+    {
+        $url = route('country.insert');
+
+        $route = $this->post($url, []);
+        $route->assertStatus(302);
+        $route->assertSessionHasErrors();
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-create'),
+        ]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testRescourceInsert()
+    {
+        $url = route('country.insert');
+
+        $test = $this->post($url, $this->countryInput());
+        $test->assertStatus(302);
+        $test->assertSessionHas([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-create'),
+        ]);
+
+        $this->assertDatabaseHas('countries', $this->countryInput());
     }
 }

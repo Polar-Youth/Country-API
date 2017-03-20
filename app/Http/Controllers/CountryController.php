@@ -58,8 +58,8 @@ class CountryController extends Controller
     /**
      * Create a new country in the database.
      *
-     * @see:unit-test   TODO: Write unit test (validation fails).
-     * @see:unit-test   TODO: Write unit test (validation success).
+     * @see:unit-test   /Tests/Feature/CountryControllerTest::testResourceInsertError()
+     * @see:unit-test   /Tests\Feature/CountryControllerTest::testResourceInsert()
      *
      * @param  CountryValidation $input The user input validation;
      * @return \Illuminate\Http\RedirectResponse
@@ -67,8 +67,8 @@ class CountryController extends Controller
     public function store(CountryValidation $input)
     {
         if ($this->dbCountry->create($input->except(['_token']))) {
-            session()->flash('class', 'alert alert-danger');
-            session()->flash('meesage', trans('country.flash-create'));
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', trans('country.flash-create'));
         }
 
         return back();

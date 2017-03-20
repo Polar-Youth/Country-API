@@ -23,3 +23,4 @@ Route::get('/countries/delete/{countryId}', 'CountryController@delete')->name('c
 Route::get('/countries/{countryId}', 'CountryController@show')->name('country.show');
 Route::post('/country/{countryId}', 'CountryController@update')->name('country.update');
 Route::post('/countries/store', 'CountryController@store')->name('country.store');
+Route::post('/countries/insert', 'CountryController@store')->name('country.insert');
