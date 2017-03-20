@@ -125,4 +125,23 @@ class NewsControllerTest extends TestCase
         // Commented because strange error
         // $this->assertDatabaseHas('articles', $this->newsInputs());
     }
+
+    /**
+     * ROUTE: news.store
+     *
+     * @test
+     * @group all
+     */
+    public function testStoreControllerNotOk()
+    {
+        $url = route('news.store');
+
+        $route = $this->post($url, []);
+        $route->assertStatus(302);
+        $route->assertSessionHasErrors();
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('news.flash-create')
+        ]);
+    }
 }

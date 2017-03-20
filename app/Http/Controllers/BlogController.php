@@ -79,8 +79,8 @@ class BlogController extends Controller
     /**
      * Create a new article in the database.
      *
-     * @see:unit-test   \Tests\Feature\NewsControllerTest::testStoreControllerOk()s
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testStoreControllerOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testStoreControllerNotOk()
      *
      * @param  NewsValidation $input The user input validation.
      * @return \Illuminate\Http\RedirectResponse
