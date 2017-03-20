@@ -32,7 +32,7 @@ class BlogController extends Controller
      */
     public function __construct(Article $dbArticle, User $dbUser)
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
         $this->dbArticle = $dbArticle;
         $this->dbUser = $dbUser;
@@ -49,6 +49,7 @@ class BlogController extends Controller
         $data['title']    = trans('news.title-index');
         $data['articles'] = $this->dbArticle->with(['author', 'categories'])->paginate(15);
 
+        // TODO: Build up the view.
         return view('news.index', $data);
     }
 
@@ -63,12 +64,15 @@ class BlogController extends Controller
      */
     public function show($articleId)
     {
-        // TODO: Check for redirect or abort 404 when no data is found.
-
         $data['article'] = $this->dbArticle->with(['author', 'categories'])->find($articleId);
-        $data['title']   = $data['article']->title;
 
-        return view('news.show', $data);
+        if ($data['article']) { // Record has been found.
+            $data['title']   = $data['article']->title;
+
+            return view('news.show', $data);
+        }
+
+        return redirect()->route('news');
     }
 
     /**

@@ -19,6 +19,6 @@ class NewsControllerTest extends TestCase
      */
     public function testIndexController()
     {
-
+        $this->get(route('news'))->assertStatus(200);
     }
 }
