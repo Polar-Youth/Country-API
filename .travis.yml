@@ -9,13 +9,11 @@ matrix:
     - php: hhvm
 
 before_script:
-    - touch .env
-    - echo "DB_CONNECTION=sqlite" >> .env
+    - php artisan key:generate
+    - php artisan migrate --database=testing --force
     - touch database/database.sqlite
     - travis_retry composer self-update
     - travis_retry composer install --no-interaction --prefer-source --dev
-    - php artisan key:generate
-    - php artisan migrate --database=testing --force
 script:
     - vendor/bin/phpunit --coverage-clover=coverage.xml
 
