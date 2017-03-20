@@ -88,11 +88,12 @@ class BlogController extends Controller
     public function store(NewsValidation $input)
     {
         $db['create']     = $this->dbArticle->create($input->except(['_token', 'categories']));
-        $db['relation']   = $this->dbArticle->find($db['create']->id)->categories()->attach($input->categories);
 
         if ($db['create']) {
-          session()->flash('class', 'alert alert-success');
-          session()->flash('message', trans('news.flash-create'));
+            $this->dbArticle->find($db['create']->id)->categories()->attach($input->categories);
+
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', trans('news.flash-create'));
         }
 
         return back();
