@@ -17,10 +17,10 @@
                                     </dd>
 
                                     <dt>ISO Alpha-2:</dt>
-                                    <dd>{{ $country->iso_alpha_2 }}</dd>
+                                    <dd>{{ strtoupper($country->iso_alpha_2) }}</dd>
 
                                     <dt>ISO Alpha-3:</dt>
-                                    <dd>{{ $country->iso_alpha_3 }}</dd>
+                                    <dd>{{ strtoupper($country->iso_alpha_3) }}</dd>
                                 </dl>
 
                                 <dl style="margin-top: 10px;" class="dl-horizontal">
