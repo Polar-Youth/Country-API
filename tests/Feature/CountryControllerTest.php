@@ -29,6 +29,35 @@ class CountryControllerTest extends TestCase
     }
 
     /**
+     * The inputs for testing the update and create.
+     *
+     * @return array
+     */
+    protected function countryInput()
+    {
+        return [
+            'continent_id'  => 4,
+            'code'          => 'BE',
+            'name'          => 'Belguim',
+            'flag'          => 'Image.jpg',
+            'fips_code'     => '053',
+            'iso_code'      => 'BEL',
+            'north_num'     => '1256',
+            'south_num'     => '1234',
+            'east_num'      => '1234',
+            'west_num'      => '1234',
+            'capital'       => 'Brussels',
+            'iso_alpha_2'   => 'BE',
+            'iso_alpha_3'   => 'BEL',
+            'geoname_id'    => '2467'
+        ];
+    }
+
+    protected function dbCheck()
+    {
+    }
+
+    /**
      * Route: country.show
      *
      * @test
@@ -94,5 +123,55 @@ class CountryControllerTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('countries', ['id' => $country->id]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceNotExistUpdate()
+    {
+        $country = factory(Country::class)->create();
+
+        $route = $this->post(route('country.update', ['countryId' => 123]));
+        $route->assertStatus(302);
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-update', ['country' => $country->name]),
+        ]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceExistValidationError()
+    {
+        $country = factory(Country::class)->create();
+        $url     = route('country.update', ['countryId' => $country->id]);
+
+        $route = $this->post($url, []);
+        $route->assertStatus(302);
+        $route->assertSessionHasErrors();
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-update', ['country' => $country->name]),
+        ]);
+    }
+
+    public function testResourceUpdateSuccess()
+    {
+        $country = factory(Country::class)->create();
+        $route   = route('country.update', ['countryId' => $country->id]);
+
+        $test = $this->post($route, $this->countryInput());
+        $test->assertStatus(302);
+
+        $this->assertDatabaseHas('countries', $this->countryInput());
+        $this->assertDatabaseMissing('countries', $this->dbCheck());
     }
 }
