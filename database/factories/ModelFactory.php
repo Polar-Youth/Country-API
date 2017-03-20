@@ -46,7 +46,9 @@ $factory->define(App\Country::class, function (Faker\Generator $faker) {
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     return [
-
+        'author_id' => '1',
+        'title'     => 'title',
+        'article'   => 'description'
     ];
 });
 

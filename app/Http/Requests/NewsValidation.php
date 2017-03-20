@@ -13,7 +13,7 @@ class NewsValidation extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class NewsValidation extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title'   => 'required',
+            'article' => 'required',
         ];
     }
 }

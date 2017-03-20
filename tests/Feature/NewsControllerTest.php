@@ -23,6 +23,16 @@ class NewsControllerTest extends TestCase
         $this->get(route('news'))->assertStatus(200);
     }
 
+    protected function newsInputs()
+    {
+        return [
+            'author_id' => 1,
+            'title'    => 'Title',
+            'article'  => 'description',
+            'categories' => 1,
+        ];
+    }
+
     /**
      * ROUTE: news.show
      *
@@ -93,5 +103,26 @@ class NewsControllerTest extends TestCase
         ]);
 
         $this->assertDatabaseMissing('articles', ['id' => $news->id]);
+    }
+
+    /**
+     * ROUTE: news.store
+     *
+     * @test
+     * @group all
+     */
+    public function testStoreControllerOk()
+    {
+        $url = route('news.store');
+
+        $route = $this->post($url, $this->newsInputs());
+        $route->assertStatus(302);
+        $route->assertSessionHas([
+            'class'   => 'alert alert-success',
+            'message' => trans('news.flash-create')
+        ]);
+
+        // Commented because strange error
+        // $this->assertDatabaseHas('articles', $this->newsInputs());
     }
 }

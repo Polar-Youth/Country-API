@@ -79,7 +79,7 @@ class BlogController extends Controller
     /**
      * Create a new article in the database.
      *
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testStoreControllerOk()s
      * @see:unit-test   TODO: write unit test.
      *
      * @param  NewsValidation $input The user input validation.
@@ -90,7 +90,7 @@ class BlogController extends Controller
         $db['create']     = $this->dbArticle->create($input->except(['_token', 'categories']));
         $db['relation']   = $this->dbArticle->find($db['create']->id)->categories()->attach($input->categories);
 
-        if ($db['create'] && $db['relation']) {
+        if ($db['create']) {
           session()->flash('class', 'alert alert-success');
           session()->flash('message', trans('news.flash-create'));
         }
