@@ -41,7 +41,7 @@ class BlogController extends Controller
     /**
      * Get the news index page.
      *
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testIndexController()
      * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -57,7 +57,7 @@ class BlogController extends Controller
      * Show a specific news message to the user.
      *
      * @see:unit-test   TODO: write unit test.
-     * @see:unit-test   TODO: write unit test (no resource).
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testShowControllerNoResource()
      *
      * @param  int $articleId the database id for the news article.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
