@@ -56,7 +56,7 @@ class BlogController extends Controller
     /**
      * Show a specific news message to the user.
      *
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testShowControllerResource()
      * @see:unit-test   \Tests\Feature\NewsControllerTest::testShowControllerNoResource()
      *
      * @param  int $articleId the database id for the news article.
@@ -69,6 +69,7 @@ class BlogController extends Controller
         if ($data['article']) { // Record has been found.
             $data['title']   = $data['article']->title;
 
+            // TODO: build up the view.
             return view('news.show', $data);
         }
 

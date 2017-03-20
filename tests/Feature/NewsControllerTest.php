@@ -38,4 +38,18 @@ class NewsControllerTest extends TestCase
 
         $this->assertDatabaseMissing('articles', ['id' => 123]);
     }
+
+    /**
+     * ROUTE: news.show
+     *
+     * @test
+     * @group all
+     */
+    public function testShowControllerResource()
+    {
+        $news = factory(Article::class)->create();
+        $url  = route('news.show', ['articleId' => $news->id]);
+
+        $this->get($url)->assertStatus(200);
+    }
 }
