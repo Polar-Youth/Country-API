@@ -131,8 +131,8 @@ class BlogController extends Controller
     /**
      * Delete a article in the database.
      *
-     * @see:unit-test   TODO: write unit test.
-     * @see:unit-test   TODO: write unit test when no id exists.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testDeleteControllerDeleteOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testDeleteControllerNoResource()
      *
      * @param  int $articleId  The article id in the database.
      * @return \Illuminate\Http\RedirectResponse

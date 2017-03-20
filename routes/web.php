@@ -28,3 +28,4 @@ Route::post('/countries/insert', 'CountryController@store')->name('country.inser
 // News routes
 Route::get('/news', 'BlogController@index')->name('news');
 Route::get('/news/{articleId}', 'BlogController@show')->name('news.show');
+Route::get('news/delete/{articleId}', 'BlogController@destroy')->name('news.delete');

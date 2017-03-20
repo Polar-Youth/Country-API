@@ -52,4 +52,46 @@ class NewsControllerTest extends TestCase
 
         $this->get($url)->assertStatus(200);
     }
+
+    /**
+     * ROUTE: news.delete
+     *
+     * @test
+     * @group all
+     */
+    public function testDeleteControllerNoResource()
+    {
+        $url = route('news.delete', ['articleId' => 123]);
+
+        $test = $this->get($url);
+        $test->assertStatus(302);
+        $test->assertRedirect(route('news'));
+        $test->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('news.flash-delete'),
+        ]);
+
+        $this->assertDatabaseMissing('articles', ['id' => 123]);
+    }
+
+    /**
+     * ROUTE: news.delete
+     *
+     * @test
+     * @group all
+     */
+    public function testDeleteControllerDeleteOk()
+    {
+        $news = factory(Article::class)->create();
+        $url  = route('news.delete', ['articleId' => $news->id]);
+
+        $test = $this->get($url);
+        $test->assertStatus(302);
+        $test->assertSessionHas([
+            'class'   => 'alert alert-success',
+            'message' => trans('news.flash-delete'),
+        ]);
+
+        $this->assertDatabaseMissing('articles', ['id' => $news->id]);
+    }
 }
