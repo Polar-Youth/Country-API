@@ -42,8 +42,7 @@ class BlogController extends Controller
      * Get the news index page.
      *
      * @see:unit-test   TODO: write unit test.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -57,6 +56,7 @@ class BlogController extends Controller
      * Show a specific news message to the user.
      *
      * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   TODO: write unit test (no resource).
      *
      * @param  int $articleId the database id for the news article.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -98,6 +98,7 @@ class BlogController extends Controller
      *
      * @see:unit-test   TODO: Write unit test.
      * @see:unit-test   TODO: Write unit test.
+     * @see:unit-test   TODO: Write unit test. (No resource)
      *
      * @param  NewsValidation $input      The user input validation.
      * @param  int            $articleId  The news article id in the database.
@@ -107,15 +108,19 @@ class BlogController extends Controller
     {
         $article = $this->dbArticle->find($articleId);
 
-        $update['data']       = $article->update($input->except(['_token', 'categories']));
-        $update['categories'] = $article->categories->sync($input->categories);
+        if ($article) { // Article has been found.
+            $update['data']       = $article->update($input->except(['_token', 'categories']));
+            $update['categories'] = $article->categories->sync($input->categories);
 
-        if ($update['data'] && $update['categories']) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('news.flash-update'));
+            if ($update['data'] && $update['categories']) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('news.flash-update'));
+            }
+
+            return back();
         }
 
-        return back();
+        return redirect()->route('news');
     }
 
     /**
@@ -129,13 +134,17 @@ class BlogController extends Controller
      */
     public function destroy($articleId)
     {
-        // TODO: Check if news article can be deleted.
+        $db['article'] = $this->dbArticle->find($articleId);
 
-        if ($this->dbArticle->find($articleId)->delete()) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('news.flash-delete'));
+        if ($db['article']) {
+            if ($db['article']->delete()) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('news.flash-delete'));
+            }
+
+            return back();
         }
 
-        return back();
+        return redirect()->route('news');
     }
 }
