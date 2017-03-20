@@ -53,8 +53,30 @@ class CountryControllerTest extends TestCase
         ];
     }
 
-    protected function dbCheck()
+    /**
+     * Database check fields and data.
+     *
+     * @param  array $record The factory data
+     * @return array
+     */
+    protected function dbCheck($record)
     {
+        return [
+            'continent_id'  => $record->continent_id,
+            'code'          => $record->code,
+            'name'          => $record->name,
+            'flag'          => $record->flag,
+            'fips_code'     => $record->fips_code,
+            'iso_code'      => $record->iso_code,
+            'north_num'     => $record->north_num,
+            'south_num'     => $record->south_num,
+            'east_num'      => $record->east_num,
+            'west_num'      => $record->west_num,
+            'capital'       => $record->capital,
+            'iso_alpha_2'   => $record->iso_alpha_2,
+            'iso_alpha_3'   => $record->iso_alpha_3,
+            'geoname_id'    => $record->geoname_id
+        ];
     }
 
     /**
@@ -170,8 +192,12 @@ class CountryControllerTest extends TestCase
 
         $test = $this->post($route, $this->countryInput());
         $test->assertStatus(302);
+        $test->assertSessionHas([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-update'),
+        ]);
 
         $this->assertDatabaseHas('countries', $this->countryInput());
-        $this->assertDatabaseMissing('countries', $this->dbCheck());
+        $this->assertDatabaseMissing('countries', $this->dbCheck($country));
     }
 }

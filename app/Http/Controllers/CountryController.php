@@ -100,7 +100,7 @@ class CountryController extends Controller
      * Update a country in the database.
      *
      * @see:unit-test   \Tests\Feature\CountryControllerTest::testResourceExistValidationError()
-     * @see:unit-test   TODO: Write unit test (validation passes).
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::
      * @see:unit-test   \Tests\Feature\CountryControllerTest::testResourceNotExistUpdate()
      *
      * @param  CountryValidation $input      The user input validation.
