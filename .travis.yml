@@ -9,12 +9,12 @@ matrix:
     - php: hhvm
 
 before_script:
+    - touch database/database.sqlite
     - travis_retry composer self-update
     - travis_retry composer install --no-interaction --prefer-source --dev
     - cp .env.example .env
     - php artisan key:generate
     - php artisan migrate --database=testing --force
-    - touch database/database.sqlite
 script:
     - vendor/bin/phpunit --coverage-clover=coverage.xml
 
