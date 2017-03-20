@@ -102,9 +102,9 @@ class BlogController extends Controller
     /**
      * Update a post in the database.
      *
-     * @see:unit-test   TODO: Write unit test.
-     * @see:unit-test   TODO: Write unit test.
-     * @see:unit-test   TODO: Write unit test. (No resource)
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testUpdateControllerOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testUpdateControllerNotOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testUpdateControllerNoResource()
      *
      * @param  NewsValidation $input      The user input validation.
      * @param  int            $articleId  The news article id in the database.
@@ -116,7 +116,7 @@ class BlogController extends Controller
 
         if ($article) { // Article has been found.
             $update['data']       = $article->update($input->except(['_token', 'categories']));
-            $update['categories'] = $article->categories->sync($input->categories);
+            $update['categories'] = $article->categories()->sync($input->categories);
 
             if ($update['data'] && $update['categories']) {
                 session()->flash('class', 'alert alert-success');
