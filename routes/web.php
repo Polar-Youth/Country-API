@@ -24,3 +24,10 @@ Route::get('/countries/{countryId}', 'CountryController@show')->name('country.sh
 Route::post('/country/{countryId}', 'CountryController@update')->name('country.update');
 Route::post('/countries/store', 'CountryController@store')->name('country.store');
 Route::post('/countries/insert', 'CountryController@store')->name('country.insert');
+
+// News routes
+Route::get('/news', 'BlogController@index')->name('news');
+Route::get('/news/{articleId}', 'BlogController@show')->name('news.show');
+Route::post('/news', 'BlogController@store')->name('news.store');
+Route::post('/news/{articleId}', 'BlogController@update')->name('news.update');
+Route::get('news/delete/{articleId}', 'BlogController@destroy')->name('news.delete');
