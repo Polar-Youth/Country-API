@@ -160,4 +160,25 @@ class SupportController extends Controller
 
         return view('support.index', $data);
     }
+
+    /**
+     * Show the specific data about a support ticket.
+     *
+     * TODO: write unit test
+     *
+     * @param  int $itemId The id for the support ticket in the database
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($itemId)
+    {
+        $data['item']  = $this->supportItems->with(['author', 'tags', 'comments'])->find($itemId);
+
+        if ($data['item']) {
+            $data['title'] = $data['item']->title;
+
+            return view();
+        }
+
+        return redirect()->route('support.index');
+    }
 }
