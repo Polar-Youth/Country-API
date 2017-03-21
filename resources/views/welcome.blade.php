@@ -17,7 +17,10 @@
 
             <div class="col-sm-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">API Documentation</div>
+                    <div class="panel-heading">
+                        <span class="fa fa-info-circle" aria-hidden="true"></span>
+                        API Documentation
+                    </div>
 
                     <div class="panel-body">
                     </div>
@@ -26,7 +29,10 @@
 
             <div class="col-sm-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Web interface</div>
+                    <div class="panel-heading">
+                        <span class="fa fa-globe" aria-hidden="true"></span>
+                        Web interface
+                    </div>
 
                     <div class="panel-body">
                     </div>
@@ -35,7 +41,10 @@
 
             <div class="col-sm-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Register as volunteer.</div>
+                    <div class="panel-heading">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                        Register as volunteer.
+                    </div>
 
                     <div class="panel-body">
                     </div>
