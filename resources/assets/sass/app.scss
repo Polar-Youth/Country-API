@@ -6,3 +6,8 @@
 @import "variables";
 @import "node_modules/flag-icon-css/sass/_flag-icon.scss";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.user-avatar {
+  height: 50px;
+  width: 50px;
+}
