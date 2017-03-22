@@ -24,34 +24,30 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $data['title'] = trans('categories.title-create');
+        return view('', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CategoryValidation $input
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryValidation $input)
     {
-        //
+        if ($this->categories->create($input->except(['_token']))) { // Record has been created.
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', trans('categories.flash-store'));
+        }
+
+        return back();
     }
 
     /**
@@ -71,12 +67,20 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $categoryId
      * @return \Illuminate\Http\Response
      */
-    public function edit($categortyId)
+    public function edit($categoryId)
     {
-        //
+        $data['category'] = $this->categories->find($categoryId);
+
+        if ($data['category']) { // Record has been found.
+            $data['title'] = trans('categories.title-edit', ['category' => $data['category']->name]);
+
+            return view('category.show', $data);
+        }
+
+        return redirect()->route('categories');
     }
 
     /**
@@ -114,6 +118,9 @@ class CategoryController extends Controller
 
         if ($data['category']) { // The record is found.
             if ($data['category']->delete()) { // The record has been deleted.
+                $this->categories->newsItems()->sync([]);
+                $this->categories->supportItems()->sync([]);
+
                 session()->flash('class', 'alert alert-success');
                 session()->flash('message', trans('categories.flash-delete', ['category' => $data['category']->name]));
 
