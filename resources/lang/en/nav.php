@@ -14,7 +14,7 @@ return [
 
     'account-settings'  => 'Account settings',
     'api-docs'          => 'API Docs',
-    'new-volunteer'     => 'New volunteer',
+    'new-volunteer'     => 'Register',
     'countries'         => 'Countries',
     'news'              => 'News',
     'support'           => 'Help forum'
