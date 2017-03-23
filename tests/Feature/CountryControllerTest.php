@@ -29,6 +29,57 @@ class CountryControllerTest extends TestCase
     }
 
     /**
+     * The inputs for testing the update and create.
+     *
+     * @return array
+     */
+    protected function countryInput()
+    {
+        return [
+            'continent_id'  => 4,
+            'code'          => 'BE',
+            'name'          => 'Belguim',
+            'flag'          => 'Image.jpg',
+            'fips_code'     => '053',
+            'iso_code'      => 'BEL',
+            'north_num'     => '1256',
+            'south_num'     => '1234',
+            'east_num'      => '1234',
+            'west_num'      => '1234',
+            'capital'       => 'Brussels',
+            'iso_alpha_2'   => 'BE',
+            'iso_alpha_3'   => 'BEL',
+            'geoname_id'    => '2467'
+        ];
+    }
+
+    /**
+     * Database check fields and data.
+     *
+     * @param  array $record The factory data
+     * @return array
+     */
+    protected function dbCheck($record)
+    {
+        return [
+            'continent_id'  => $record->continent_id,
+            'code'          => $record->code,
+            'name'          => $record->name,
+            'flag'          => $record->flag,
+            'fips_code'     => $record->fips_code,
+            'iso_code'      => $record->iso_code,
+            'north_num'     => $record->north_num,
+            'south_num'     => $record->south_num,
+            'east_num'      => $record->east_num,
+            'west_num'      => $record->west_num,
+            'capital'       => $record->capital,
+            'iso_alpha_2'   => $record->iso_alpha_2,
+            'iso_alpha_3'   => $record->iso_alpha_3,
+            'geoname_id'    => $record->geoname_id
+        ];
+    }
+
+    /**
      * Route: country.show
      *
      * @test
@@ -94,5 +145,104 @@ class CountryControllerTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('countries', ['id' => $country->id]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceNotExistUpdate()
+    {
+        $country = factory(Country::class)->create();
+
+        $route = $this->post(route('country.update', ['countryId' => 123]));
+        $route->assertStatus(302);
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-update', ['country' => $country->name]),
+        ]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceExistValidationError()
+    {
+        $country = factory(Country::class)->create();
+        $url     = route('country.update', ['countryId' => $country->id]);
+
+        $route = $this->post($url, []);
+        $route->assertStatus(302);
+        $route->assertSessionHasErrors();
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-update', ['country' => $country->name]),
+        ]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceUpdateSuccess()
+    {
+        $country = factory(Country::class)->create();
+        $route   = route('country.update', ['countryId' => $country->id]);
+
+        $test = $this->post($route, $this->countryInput());
+        $test->assertStatus(302);
+        $test->assertSessionHas([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-update'),
+        ]);
+
+        $this->assertDatabaseHas('countries', $this->countryInput());
+        $this->assertDatabaseMissing('countries', $this->dbCheck($country));
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testResourceInsertError()
+    {
+        $url = route('country.insert');
+
+        $route = $this->post($url, []);
+        $route->assertStatus(302);
+        $route->assertSessionHasErrors();
+        $route->assertSessionMissing([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-create'),
+        ]);
+    }
+
+    /**
+     * ROUTE: country.update
+     *
+     * @test
+     * @group all
+     */
+    public function testRescourceInsert()
+    {
+        $url = route('country.insert');
+
+        $test = $this->post($url, $this->countryInput());
+        $test->assertStatus(302);
+        $test->assertSessionHas([
+            'class'   => 'alert alert-success',
+            'message' => trans('country.flash-create'),
+        ]);
+
+        $this->assertDatabaseHas('countries', $this->countryInput());
     }
 }

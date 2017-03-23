@@ -14,9 +14,11 @@ class Article extends Model
     /**
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['title', 'article', 'author_id'];
 
     /**
+     * Get the author information for the article.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function author()

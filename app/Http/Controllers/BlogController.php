@@ -32,7 +32,7 @@ class BlogController extends Controller
      */
     public function __construct(Article $dbArticle, User $dbUser)
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
         $this->dbArticle = $dbArticle;
         $this->dbUser = $dbUser;
@@ -41,41 +41,46 @@ class BlogController extends Controller
     /**
      * Get the news index page.
      *
-     * @see:unit-test   TODO: write unit test.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testIndexController()
+     * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
         $data['title']    = trans('news.title-index');
         $data['articles'] = $this->dbArticle->with(['author', 'categories'])->paginate(15);
 
+        // TODO: Build up the view.
         return view('news.index', $data);
     }
 
     /**
      * Show a specific news message to the user.
      *
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testShowControllerResource()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testShowControllerNoResource()
      *
      * @param  int $articleId the database id for the news article.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($articleId)
     {
-        // TODO: Check for redirect or abort 404 when no data is found.
-
         $data['article'] = $this->dbArticle->with(['author', 'categories'])->find($articleId);
-        $data['title']   = $data['article']->title;
 
-        return view('news.show', $data);
+        if ($data['article']) { // Record has been found.
+            $data['title']   = $data['article']->title;
+
+            // TODO: build up the view.
+            return view('news.show', $data);
+        }
+
+        return redirect()->route('news');
     }
 
     /**
      * Create a new article in the database.
      *
-     * @see:unit-test   TODO: write unit test.
-     * @see:unit-test   TODO: write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testStoreControllerOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testStoreControllerNotOk()
      *
      * @param  NewsValidation $input The user input validation.
      * @return \Illuminate\Http\RedirectResponse
@@ -83,11 +88,12 @@ class BlogController extends Controller
     public function store(NewsValidation $input)
     {
         $db['create']     = $this->dbArticle->create($input->except(['_token', 'categories']));
-        $db['relation']   = $this->dbArticle->find($db['create']->id)->categories()->attach($input->categories);
 
-        if ($db['create'] && $db['relation']) {
-          session()->flash('class', 'alert alert-success');
-          session()->flash('message', trans('news.flash-create'));
+        if ($db['create']) {
+            $this->dbArticle->find($db['create']->id)->categories()->attach($input->categories);
+
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', trans('news.flash-create'));
         }
 
         return back();
@@ -96,8 +102,9 @@ class BlogController extends Controller
     /**
      * Update a post in the database.
      *
-     * @see:unit-test   TODO: Write unit test.
-     * @see:unit-test   TODO: Write unit test.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testUpdateControllerOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testUpdateControllerNotOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testUpdateControllerNoResource()
      *
      * @param  NewsValidation $input      The user input validation.
      * @param  int            $articleId  The news article id in the database.
@@ -107,35 +114,43 @@ class BlogController extends Controller
     {
         $article = $this->dbArticle->find($articleId);
 
-        $update['data']       = $article->update($input->except(['_token', 'categories']));
-        $update['categories'] = $article->categories->sync($input->categories);
+        if ($article) { // Article has been found.
+            $update['data']       = $article->update($input->except(['_token', 'categories']));
+            $update['categories'] = $article->categories()->sync($input->categories);
 
-        if ($update['data'] && $update['categories']) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('news.flash-update'));
+            if ($update['data'] && $update['categories']) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('news.flash-update'));
+            }
+
+            return back();
         }
 
-        return back();
+        return redirect()->route('news');
     }
 
     /**
      * Delete a article in the database.
      *
-     * @see:unit-test   TODO: write unit test.
-     * @see:unit-test   TODO: write unit test when no id exists.
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testDeleteControllerDeleteOk()
+     * @see:unit-test   \Tests\Feature\NewsControllerTest::testDeleteControllerNoResource()
      *
      * @param  int $articleId  The article id in the database.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($articleId)
     {
-        // TODO: Check if news article can be deleted.
+        $db['article'] = $this->dbArticle->find($articleId);
 
-        if ($this->dbArticle->find($articleId)->delete()) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('news.flash-delete'));
+        if ($db['article']) {
+            if ($db['article']->delete()) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('news.flash-delete'));
+            }
+
+            return back();
         }
 
-        return back();
+        return redirect()->route('news');
     }
 }

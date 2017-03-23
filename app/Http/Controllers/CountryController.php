@@ -58,8 +58,8 @@ class CountryController extends Controller
     /**
      * Create a new country in the database.
      *
-     * @see:unit-test   TODO: Write unit test (validation fails).
-     * @see:unit-test   TODO: Write unit test (validation success).
+     * @see:unit-test   /Tests/Feature/CountryControllerTest::testResourceInsertError()
+     * @see:unit-test   /Tests\Feature/CountryControllerTest::testResourceInsert()
      *
      * @param  CountryValidation $input The user input validation;
      * @return \Illuminate\Http\RedirectResponse
@@ -67,8 +67,8 @@ class CountryController extends Controller
     public function store(CountryValidation $input)
     {
         if ($this->dbCountry->create($input->except(['_token']))) {
-            session()->flash('class', 'alert alert-danger');
-            session()->flash('meesage', trans('country.flash-create'));
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', trans('country.flash-create'));
         }
 
         return back();
@@ -88,7 +88,8 @@ class CountryController extends Controller
         $data['country'] = $this->dbCountry->with(['continent', ])->find($countryId);
 
         if ($data['country']) {
-            $data['title']   = $data['country']->name;
+            $data['title']     = $data['country']->name;
+            $data['countries'] = $this->dbCountry->all();
 
             return view('countries.show', $data);
         }
@@ -99,9 +100,9 @@ class CountryController extends Controller
     /**
      * Update a country in the database.
      *
-     * @see:unit-test   TODO: Write unit test (validation fails).
-     * @see:unit-test   TODO: Write unit test (validation passes).
-     * @see:unit-test   TODO: Write unit test (No resource).
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testResourceExistValidationError()
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::
+     * @see:unit-test   \Tests\Feature\CountryControllerTest::testResourceNotExistUpdate()
      *
      * @param  CountryValidation $input      The user input validation.
      * @param  int               $countryId  The id for the country.
@@ -109,16 +110,18 @@ class CountryController extends Controller
      */
     public function update(CountryValidation $input, $countryId)
     {
-        // TODO: Implement check to see if the resource exists.
+        $record = $this->dbCountry->find($countryId);
 
-        $data = $this->dbCountry->find($countryId);
+        if ($record) { // Record has been found.
+            if ($record->update($input->except('_token'))) {
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('country.flash-update', ['country' => $record->name]));
+            }
 
-        if ($data->update($input->except['_token'])) {
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', trans('country.flash-udate'));
+            return back();
         }
 
-        return back();
+        return redirect()->route('country');
     }
 
     /**
@@ -132,16 +135,17 @@ class CountryController extends Controller
      */
     public function delete($countryId)
     {
-        // TODO: Implement admin permissions for using this route.
         $record = $this->dbCountry->find($countryId);
 
         if ($record) { // Check if the record is found.
-            if ($record->delete()) {
+            if ($record->delete()) { // Record has been deleted.
                 session()->flash('class', 'alert alert-success');
                 session()->flash('message', trans('country.flash-delete', ['country' => $record->name]));
             }
+
+            return back();
         }
 
-        return back();
+        return redirect()->route('country');
     }
 }
