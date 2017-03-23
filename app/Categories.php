@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Categories
+ *
+ * @package App
+ */
 class Categories extends Model
 {
     /**
@@ -11,5 +16,5 @@ class Categories extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'module', 'description'];
 }

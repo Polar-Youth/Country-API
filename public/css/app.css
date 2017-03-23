@@ -9749,3 +9749,8 @@ button.close {
     display: none !important;
   }
 }
+
+.user-avatar {
+  height: 50px;
+  width: 50px;
+}

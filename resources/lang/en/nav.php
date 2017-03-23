@@ -16,5 +16,6 @@ return [
     'api-docs'          => 'API Docs',
     'new-volunteer'     => 'New volunteer',
     'countries'         => 'Countries',
-    'news'              => 'News'
+    'news'              => 'News',
+    'support'           => 'Help forum'
 ];

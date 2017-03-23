@@ -59,7 +59,12 @@
                         </li>
                         <li>
                             <a href="">
-                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> @lang('news')
+                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> @lang('nav.news')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('support.index') }}">
+                                <span class="fa fa-question-circle" aria-hidden="true"></span> @lang('nav.support')
                             </a>
                         </li>
                     </ul>
