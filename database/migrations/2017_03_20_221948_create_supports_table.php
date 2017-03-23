@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateCategoriesTable
+ * Class CreateSupportsTable
  */
-class CreateCategoriesTable extends Migration
+class CreateSupportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +16,11 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('supports', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('module');
-            $table->string('name');
-            $table->string('description');
+            $table->integer('author_id');
+            $table->string('title');
+            $table->text('post');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('supports');
     }
 }

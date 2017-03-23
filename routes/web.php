@@ -31,3 +31,13 @@ Route::get('/news/{articleId}', 'BlogController@show')->name('news.show');
 Route::post('/news', 'BlogController@store')->name('news.store');
 Route::post('/news/{articleId}', 'BlogController@update')->name('news.update');
 Route::get('news/delete/{articleId}', 'BlogController@destroy')->name('news.delete');
+
+// Support routes.
+Route::get('/support', 'SupportController@index')->name('support.index');
+Route::get('/support/group/{selector}', 'SupportController@group')->name('support.group');
+Route::get('/support/new', 'SupportController@create')->name('support.create');
+Route::get('/support/search', 'SupportController@search')->name('support.search');
+Route::post('/support', 'SupportController@store')->name('support.store');
+
+// Category routes.
+Route::get('/category/{tagId}', 'CategoryController@show')->name('category.show');

@@ -62,4 +62,14 @@ class Country extends Model
         return $this->belongsToMany(Country::class, 'country_border', 'country_id', 'border_id')
             ->withTimestamps();
     }
+
+    /**
+     * Language relationship fot the country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function language()
+    {
+        return $this->belongsToMany(Language::class)->withTimestamps();
+    }
 }
