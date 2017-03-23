@@ -88,7 +88,8 @@ class CountryController extends Controller
         $data['country'] = $this->dbCountry->with(['continent', ])->find($countryId);
 
         if ($data['country']) {
-            $data['title']   = $data['country']->name;
+            $data['title']     = $data['country']->name;
+            $data['countries'] = $this->dbCountry->all();
 
             return view('countries.show', $data);
         }
