@@ -19,7 +19,7 @@ class UsersController extends Controller
      */
     public function __construct(User $users)
     {
-        $this->middleware('role:admin');
+        // $this->middleware('role:admin,access_users');
 
         $this->users = $users;
     }
@@ -27,8 +27,7 @@ class UsersController extends Controller
     /**
      * List all the users in the platform.
      *
-     * // TODO: Implement phpunit test.
-     *
+     * @see:unit-test   \Tests\Feature\UsersControllerTest::testIndexController()
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -48,8 +47,37 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function status()
+    public function status($userId, $statusId)
     {
+        switch ($statusId) {
+            case 1: // User getting blocked.
+                break;
+            case 2: // User getting unblocked.
+                break;
+            default:
+        }
         return back();
+    }
+
+    /**
+     * Delete a user out off the database.
+     *
+     * @param  int $userId The user id in the database.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($userId)
+    {
+        $db['user'] = $this->users->find($userId);
+
+        if ($db['user']) { // Record is found.
+            if($db['user']->delete()) { // Record has been deleted.
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', trans('users.flash-delete'));
+            }
+
+            return back();
+        }
+
+        return response()->route('users');
     }
 }
