@@ -131,6 +131,19 @@ class CategoryControllerTest extends TestCase
     }
 
     /**
+     * Route: category.edit
+     *
+     * @test
+     * @group all
+     */
+    public function testCategoryTestEditNoData()
+    {
+        $route = route('category.edit', ['categoryId' => 123]);
+
+        $this->get($route)->assertStatus(302);
+    }
+
+    /**
      * Route: category.delete
      *
      * @test
