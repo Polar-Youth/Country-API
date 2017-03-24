@@ -158,6 +158,25 @@ class CategoryControllerTest extends TestCase
     }
 
     /**
+     * Route: category.update
+     *
+     * @test
+     * @group all
+     */
+    public function testUpdateNoResource()
+    {
+        $category = factory(Categories::class)->create();
+        $route = route('category.update', ['categoryId' => 123]);
+
+        $this->post($route, [])
+            ->assertStatus(302)
+            ->assertSessionMissing([
+                'class' => 'alert alert-success',
+                'message' => trans('categories.flash-update', ['category' => $category->name])
+            ]);
+    }
+
+    /**
      * Route: category.delete
      *
      * @test

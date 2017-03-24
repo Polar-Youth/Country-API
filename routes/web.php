@@ -47,4 +47,5 @@ Route::get('/categories/edit/{categoryId}', 'CategoryController@edit')->name('ca
 Route::get('/category/show/{tagId}', 'CategoryController@show')->name('category.show');
 Route::get('/category/delete/{categoryId}', 'CategoryController@destroy')->name('category.delete');
 Route::get('/category/create', 'CategoryController@create')->name('category.create');
+Route::post('/categories/{categoryId}', 'CategoryController@update')->name('category.update');
 Route::post('/categories', 'CategoryController@store')->name('category.store');

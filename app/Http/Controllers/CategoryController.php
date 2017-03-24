@@ -118,6 +118,17 @@ class CategoryController extends Controller
         return redirect()->route('categories');
     }
 
+    /**
+     * Update a category.
+     *
+     * @see:unit-test   TODO: no validation errors
+     * @see:unit-test   TODO: validation errors
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateNoResource()
+     *
+     * @param  CategoryValidation $input The user input in the database.
+     * @param  int $categoryId The category id in the database.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(CategoryValidation $input, $categoryId)
     {
         $db['categories'] = $this->categories->find($categoryId);
