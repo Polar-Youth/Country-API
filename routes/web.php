@@ -43,7 +43,7 @@ Route::get('/users', 'UsersController@index')->name('users');
 
 // Category routes.
 Route::get('/categories', 'CategoryController@index')->name('categories');
-Route::get('/category/{tagId}', 'CategoryController@show')->name('category.show');
+Route::get('/category/show/{tagId}', 'CategoryController@show')->name('category.show');
 Route::get('/category/delete/{categoryId}', 'CategoryController@destroy')->name('category.delete');
 Route::get('/category/create', 'CategoryController@create')->name('category.create');
 Route::post('/categories', 'CategoryController@store')->name('category.store');

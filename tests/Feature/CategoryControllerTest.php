@@ -85,8 +85,7 @@ class CategoryControllerTest extends TestCase
     public function testCategoryCreateView()
     {
         $route = $this->get(route('category.create'));
-        $route->assertStatus(302);
-        //->assertStatus(200);
+        $route->assertStatus(200);
     }
 
     /**
