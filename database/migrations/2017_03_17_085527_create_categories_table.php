@@ -23,6 +23,13 @@ class CreateCategoriesTable extends Migration
             $table->string('description');
             $table->timestamps();
         });
+
+        Schema::create('categories_support', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('category_id');
+            $table->integer('support-id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,5 +40,6 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('categories_support');
     }
 }
