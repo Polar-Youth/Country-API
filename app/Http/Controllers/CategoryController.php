@@ -121,8 +121,8 @@ class CategoryController extends Controller
     /**
      * Update a category.
      *
-     * @see:unit-test   TODO: no validation errors
-     * @see:unit-test   TODO: validation errors
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateValidationSuccess()
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateValidationErr()
      * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateNoResource()
      *
      * @param  CategoryValidation $input The user input in the database.

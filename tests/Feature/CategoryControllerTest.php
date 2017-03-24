@@ -177,6 +177,55 @@ class CategoryControllerTest extends TestCase
     }
 
     /**
+     * Route: category.update
+     *
+     * @test
+     * @group all
+     */
+    public function testUpdateValidationErr()
+    {
+        $category = factory(Categories::class)->create();
+        $route    = route('category.update', ['categoryId' => $category->id]);
+
+        $this->post($route, [])
+            ->assertStatus(302)
+            ->assertSessionMissing([
+                'class' => 'alert alert-success',
+                'message' => trans('categories.flash-update', ['category' => $category->name])
+            ]);
+    }
+
+    /**
+     * Route: category.update
+     *
+     * @test
+     * @group all
+     */
+    public function testUpdateValidationSuccess()
+    {
+        $category = factory(Categories::class)->create();
+        $route    = route('category.update', ['categoryId' => $category->id]);
+
+        $input['name']        = 'crap';
+        $input['module']      = 'Some label';
+        $input['description'] = 'Category description';
+
+        $this->post($route, $input)
+            ->assertStatus(302)
+            ->assertSessionHas([
+                'class' => 'alert alert-success',
+                'message' => trans('categories.flash-update', ['category' => $category->name])
+            ]);
+
+        $this->assertDatabaseHas('categories', $input);
+        $this->assertDatabaseMissing('categories', [
+            'name' => $category->name,
+            'module' => $category->module,
+            'description' => $category->description
+        ]);
+    }
+
+    /**
      * Route: category.delete
      *
      * @test
