@@ -144,6 +144,20 @@ class CategoryControllerTest extends TestCase
     }
 
     /**
+     * Route: category.edit
+     *
+     * @test
+     * @group all
+     */
+    public function testCategoryTestEditData()
+    {
+        $category = factory(Categories::class)->create();
+        $route    = route('category.edit', ['categoryId' => $category->id]);
+
+        $this->get($route)->assertStatus(200);
+    }
+
+    /**
      * Route: category.delete
      *
      * @test

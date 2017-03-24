@@ -100,7 +100,7 @@ class CategoryController extends Controller
      * Edit view for a category.
      *
      * @see:unit-test \Tests\Feature\CategoryControllerTest::testCategoryTestEditNoData()
-     * @see:unit-test // TODO
+     * @see:unit-test \Tests\Feature\CategoryControllerTest::testCategoryTestEditData()
      *
      * @param  int $categoryId The category id in the database.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
@@ -112,7 +112,7 @@ class CategoryController extends Controller
         if ($data['category']) { // Record has been found.
             $data['title'] = trans('categories.title-edit', ['category' => $data['category']->name]);
 
-            return view('category.show', $data);
+            return view('categories.edit', $data);
         }
 
         return redirect()->route('categories');
