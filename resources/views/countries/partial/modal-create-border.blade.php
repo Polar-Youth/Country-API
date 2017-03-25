@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Add new border for {{ $country->name }}</h4>
             </div>
             <div class="modal-body">
-                <form action="" class="form-horizontal" id="border">
+                <form action="{{ route('border.create', ['borderId' => $country->id]) }}" class="form-horizontal" id="border">
                     {{ csrf_field() }}
 
                     <div class="form-group">
@@ -16,7 +16,7 @@
                         </label>
 
                         <div class="col-md-9">
-                            <select name="country" id="country" class="form-control">
+                            <select name="countryId" id="country" class="form-control">
                                 <option value="">-- Select the border country --</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->id }}"> {{ $country->name }} </option>

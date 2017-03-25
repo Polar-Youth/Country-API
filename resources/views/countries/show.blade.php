@@ -61,13 +61,31 @@
                     </div>
 
                     <div class="panel-body">
-                        @if ('' === '') {{--  There are no borders found for the country. --}}
+                        @if ((int) count($country->borders) === 0) {{--  There are no borders found for the country. --}}
                             <div class="alert alert-info" role="alert">
                                 <strong><span class="fa fa-info-circle" aria-hidden="true"></span></strong>
                                 There are no borders for this country in the system.
                             </div>
                         @else
                             <div class="table-responsive">
+                                <table class="table table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ISO code:</th>
+                                            <th>Name:</th>
+                                            <th>Capital:</th>
+                                            <th>Continent:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($country->borders as $border)
+                                            <tr>
+                                                <td><strong>#{{ $border->id }}</strong></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         @endif
                     </div>
