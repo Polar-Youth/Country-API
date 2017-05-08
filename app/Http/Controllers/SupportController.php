@@ -151,7 +151,7 @@ class SupportController extends Controller
     public function search(Request $input)
     {
         $term = $input->get('term');
-
+      
         $data['selector']   = 'all';
         $data['title']      = trans('support.title-search', ['term' => $term]);
         $data['items']      = $this->supportItems->with(['author'])

@@ -32,12 +32,41 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
+                    {{-- Branding Image --}}
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                </div>
 
-                        {{-- Branding Image --}}
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            {{ config('app.name', 'Laravel') }}
-                        </a>
-                    </div>
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    {{-- Left Side Of Navbar --}}
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="">
+                                <span class="fa fa-flag" aria-hidden="true"></span> @lang('nav.countries')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-file-code-o" aria-hidden="true"></span> @lang('nav.api-docs')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-plus" aria-hidden="true"></span> @lang('nav.new-volunteer')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="fa fa-newspaper-o" aria-hidden="true"></span> @lang('nav.news')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('support.index') }}">
+                                <span class="fa fa-question-circle" aria-hidden="true"></span> @lang('nav.support')
+                            </a>
+                        </li>
+                    </ul>
 
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         {{-- Left Side Of Navbar --}}
