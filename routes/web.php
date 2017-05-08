@@ -38,3 +38,9 @@ Route::get('/support/group/{selector}', 'SupportController@group')->name('suppor
 Route::get('/support/new', 'SupportController@create')->name('support.create');
 Route::get('/support/search', 'SupportController@search')->name('support.search');
 Route::post('/support', 'SupportController@store')->name('support.store');
+
+// User routes
+Route::get('/users', 'UsersController@index')->name('users');
+
+// Category routes.
+Route::get('/category/{tagId}', 'CategoryController@show')->name('category.show');

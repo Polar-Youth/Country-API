@@ -17,4 +17,24 @@ class Categories extends Model
      * @var array
      */
     protected $fillable = ['name', 'module', 'description'];
+
+    /**
+     * Get the news items for a specific tag.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function newsItems()
+    {
+        return $this->belongsToMany(Article::class)->withTimestamps();
+    }
+
+    /**
+     * Get the support items for a category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function supportItems()
+    {
+        return $this->belongsToMany(Support::class)->withTimestamps();
+    }
 }

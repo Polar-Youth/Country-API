@@ -151,9 +151,10 @@ class SupportController extends Controller
     public function search(Request $input)
     {
         $term = $input->get('term');
-
-        $data['title'] = trans('support.title-search', ['term' => $term]);
-        $data['items'] = $this->supportItems->with(['author'])
+      
+        $data['selector']   = 'all';
+        $data['title']      = trans('support.title-search', ['term' => $term]);
+        $data['items']      = $this->supportItems->with(['author'])
             ->where('title', 'LIKE', "%$term%")
             ->orWhere('post', 'LIKE', "$term")
             ->paginate(10);

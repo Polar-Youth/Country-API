@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categories;
 use App\User;
 use App\Article;
 use Illuminate\Http\Request;
@@ -25,17 +26,24 @@ class BlogController extends Controller
     private $dbUser;
 
     /**
+     * @var Categories
+     */
+    private $dbCategories;
+
+    /**
      * BlogController constructor.
      *
-     * @param Article $dbArticle
-     * @param User $dbUser
+     * @param Article       $dbArticle
+     * @param User          $dbUser
+     * @param Categories    $dbCategories
      */
-    public function __construct(Article $dbArticle, User $dbUser)
+    public function __construct(Article $dbArticle, User $dbUser, Categories $dbCategories)
     {
         // $this->middleware('auth');
 
-        $this->dbArticle = $dbArticle;
-        $this->dbUser = $dbUser;
+        $this->dbArticle        = $dbArticle;
+        $this->dbCategories     = $dbCategories;
+        $this->dbUser           = $dbUser;
     }
 
     /**
@@ -46,8 +54,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $data['title']    = trans('news.title-index');
-        $data['articles'] = $this->dbArticle->with(['author', 'categories'])->paginate(15);
+        $data['title']      = trans('news.title-index');
+        $data['articles']   = $this->dbArticle->with(['author', 'categories'])->paginate(15);
+        $data['categories'] = $this->dbCategories->all();
 
         // TODO: Build up the view.
         return view('news.index', $data);
@@ -142,7 +151,7 @@ class BlogController extends Controller
     {
         $db['article'] = $this->dbArticle->find($articleId);
 
-        if ($db['article']) {
+        if ($db['article']) { // Record has been found.
             if ($db['article']->delete()) {
                 session()->flash('class', 'alert alert-success');
                 session()->flash('message', trans('news.flash-delete'));

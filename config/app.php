@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'PY Country',
 
     /*
     |--------------------------------------------------------------------------
@@ -170,6 +170,7 @@ return [
         Spatie\Activitylog\ActivitylogServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
