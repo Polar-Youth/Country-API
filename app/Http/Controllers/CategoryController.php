@@ -6,6 +6,11 @@ use App\Categories;
 use App\Http\Requests\CategoryValidation;
 use Illuminate\Http\Request;
 
+/**
+ * Class CategoryController
+ *
+ * @package App\Http\Controllers
+ */
 class CategoryController extends Controller
 {
     /**
@@ -24,21 +29,40 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * List all the tags with their information in the system.
      *
-     * @return \Illuminate\Http\Response
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testIndexController()
+     * @return          \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        $data['title']      = trans('categories.title-index');
+        $data['categories'] = Categories::paginate(15);
+
+        return view('categories.index', $data);
+    }
+
+    /**
+     * Create view for a new category.
+     *
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testCategoryCreateView()
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         $data['title'] = trans('categories.title-create');
-        return view('', $data);
+        return view('categories.create', $data);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Insert a new category.
      *
-     * @param  CategoryValidation $input
-     * @return \Illuminate\Http\Response
+     * @see:unit-test \Tests\Feature\CategoryControllerTest::testCategoryInsertError()
+     * @see:unit-test \Tests\Feature\CategoryControllerTest::testCategoryInsertOk()
+     *
+     * @param  CategoryValidation $input The user input
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CategoryValidation $input)
     {
@@ -51,24 +75,35 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show a specific category in the system.
      *
-     * @param  int  $categoryId     The category id in the database.
-     * @return \Illuminate\Http\Response
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testShowWithData()
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testShowNoData()
+     *
+     * @param  int $categoryId The category id in the system.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show($categoryId)
     {
-        $data['categories'] = $this->categories->find($categoryId);
-        $data['title']      = trans('categories.title-show', ['category' => $data['category']->title]);
+        $data['category'] = $this->categories->find($categoryId);
 
-        return view('', $data);
+        if ($data['category']) {
+            $data['title']  = trans('categories.title-show', ['category' => $data['category']->title]);
+
+            return view('categories.show', $data);
+        }
+
+        return redirect()->route('categories');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Edit view for a category.
      *
-     * @param  int  $categoryId
-     * @return \Illuminate\Http\Response
+     * @see:unit-test \Tests\Feature\CategoryControllerTest::testCategoryTestEditNoData()
+     * @see:unit-test \Tests\Feature\CategoryControllerTest::testCategoryTestEditData()
+     *
+     * @param  int $categoryId The category id in the database.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit($categoryId)
     {
@@ -77,18 +112,22 @@ class CategoryController extends Controller
         if ($data['category']) { // Record has been found.
             $data['title'] = trans('categories.title-edit', ['category' => $data['category']->name]);
 
-            return view('category.show', $data);
+            return view('categories.edit', $data);
         }
 
         return redirect()->route('categories');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a category.
      *
-     * @param  CategoryValidation $input
-     * @param  int $categoryId
-     * @return \Illuminate\Http\Response
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateValidationSuccess()
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateValidationErr()
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testUpdateNoResource()
+     *
+     * @param  CategoryValidation $input The user input in the database.
+     * @param  int $categoryId The category id in the database.
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(CategoryValidation $input, $categoryId)
     {
@@ -107,10 +146,13 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a category in the database.
      *
-     * @param  int  $categoryId
-     * @return \Illuminate\Http\Response
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testDestroyWithData()
+     * @see:unit-test   \Tests\Feature\CategoryControllerTest::testDestroyWithNoData()
+     *
+     * @param  int $categoryId The category id in the database.
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($categoryId)
     {
@@ -118,8 +160,8 @@ class CategoryController extends Controller
 
         if ($data['category']) { // The record is found.
             if ($data['category']->delete()) { // The record has been deleted.
-                $this->categories->newsItems()->sync([]);
-                $this->categories->supportItems()->sync([]);
+                $data['category']->newsItems()->sync([]);
+                $data['category']->supportItems()->sync([]);
 
                 session()->flash('class', 'alert alert-success');
                 session()->flash('message', trans('categories.flash-delete', ['category' => $data['category']->name]));

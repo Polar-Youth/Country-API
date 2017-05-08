@@ -55,6 +55,15 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Categories::class, function (Faker\Generator $faker) {
     return [
+        'name'        => $faker->name,
+        'module'      => $faker->word,
+        'description' => $faker->word
+    ];
+});
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Categories::class, function (Faker\Generator $faker) {
+    return [
         'module'      => $faker->word,
         'name'        => $faker->word,
         'description' => $faker->word,
